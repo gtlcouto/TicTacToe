@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		29EB7D1F1A5F310900818CEF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D1E1A5F310900818CEF /* main.m */; };
 		29EB7D221A5F310900818CEF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D211A5F310900818CEF /* AppDelegate.m */; };
-		29EB7D251A5F310900818CEF /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D241A5F310900818CEF /* RootViewController.m */; };
+		29EB7D251A5F310900818CEF /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D241A5F310900818CEF /* GameViewController.m */; };
 		29EB7D281A5F310900818CEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29EB7D261A5F310900818CEF /* Main.storyboard */; };
 		29EB7D2A1A5F310900818CEF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29EB7D291A5F310900818CEF /* Images.xcassets */; };
 		29EB7D2D1A5F310900818CEF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EB7D2B1A5F310900818CEF /* LaunchScreen.xib */; };
 		29EB7D391A5F310900818CEF /* TicTacToeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D381A5F310900818CEF /* TicTacToeTests.m */; };
 		29EB7D441A5F5A5500818CEF /* WinConditionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D431A5F5A5500818CEF /* WinConditionChecker.m */; };
 		29EB7D471A5F8B6F00818CEF /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D461A5F8B6F00818CEF /* HelpViewController.m */; };
+		608541CC1A5F9939006A4491 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608541CB1A5F9939006A4491 /* RootViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,8 +35,8 @@
 		29EB7D1E1A5F310900818CEF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29EB7D201A5F310900818CEF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		29EB7D211A5F310900818CEF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		29EB7D231A5F310900818CEF /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		29EB7D241A5F310900818CEF /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		29EB7D231A5F310900818CEF /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		29EB7D241A5F310900818CEF /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		29EB7D271A5F310900818CEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		29EB7D291A5F310900818CEF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		29EB7D2C1A5F310900818CEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -46,6 +47,8 @@
 		29EB7D431A5F5A5500818CEF /* WinConditionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WinConditionChecker.m; sourceTree = "<group>"; };
 		29EB7D451A5F8B6F00818CEF /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		29EB7D461A5F8B6F00818CEF /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
+		608541CA1A5F9939006A4491 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		608541CB1A5F9939006A4491 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,8 +92,10 @@
 			children = (
 				29EB7D201A5F310900818CEF /* AppDelegate.h */,
 				29EB7D211A5F310900818CEF /* AppDelegate.m */,
-				29EB7D231A5F310900818CEF /* RootViewController.h */,
-				29EB7D241A5F310900818CEF /* RootViewController.m */,
+				29EB7D231A5F310900818CEF /* GameViewController.h */,
+				608541CA1A5F9939006A4491 /* RootViewController.h */,
+				608541CB1A5F9939006A4491 /* RootViewController.m */,
+				29EB7D241A5F310900818CEF /* GameViewController.m */,
 				29EB7D261A5F310900818CEF /* Main.storyboard */,
 				29EB7D291A5F310900818CEF /* Images.xcassets */,
 				29EB7D2B1A5F310900818CEF /* LaunchScreen.xib */,
@@ -230,7 +235,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				29EB7D471A5F8B6F00818CEF /* HelpViewController.m in Sources */,
-				29EB7D251A5F310900818CEF /* RootViewController.m in Sources */,
+				29EB7D251A5F310900818CEF /* GameViewController.m in Sources */,
+				608541CC1A5F9939006A4491 /* RootViewController.m in Sources */,
 				29EB7D221A5F310900818CEF /* AppDelegate.m in Sources */,
 				29EB7D441A5F5A5500818CEF /* WinConditionChecker.m in Sources */,
 				29EB7D1F1A5F310900818CEF /* main.m in Sources */,
@@ -424,6 +430,7 @@
 				29EB7D3E1A5F310A00818CEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		29EB7D3F1A5F310A00818CEF /* Build configuration list for PBXNativeTarget "TicTacToeTests" */ = {
 			isa = XCConfigurationList;
@@ -432,6 +439,7 @@
 				29EB7D411A5F310A00818CEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
