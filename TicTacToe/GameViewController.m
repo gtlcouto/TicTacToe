@@ -67,8 +67,8 @@
     NSLog(@"%li", (long)labelTouched.tag);
     NSString *labelTag = [NSString stringWithFormat:@"%li",(long)labelTouched.tag];
 
-    if (!([self.playerXMoves containsObject:labelTag]  ||
-        [self.playerOMoves containsObject:labelTag]) )
+    if ((!([self.playerXMoves containsObject:labelTag]  ||
+        [self.playerOMoves containsObject:labelTag])) && labelTouched!=nil )
     {
         if (self.isMultiplayer)
         {
@@ -159,6 +159,7 @@
 
 - (UILabel *)findLabelUsingPoint: (CGPoint)point
 {
+    UILabel  *returnLabel = nil;
     for (UILabel *label in self.allGameLabels)
     {
         if (CGRectContainsPoint(label.frame, point) && label.tag != self.winLabel.tag)
@@ -167,7 +168,7 @@
         }
     }
 
-    return [[UILabel alloc]init];
+    return returnLabel;
 
 }
 
