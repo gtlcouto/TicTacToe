@@ -14,6 +14,7 @@
 		29EB7D2A1A5F310900818CEF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29EB7D291A5F310900818CEF /* Images.xcassets */; };
 		29EB7D2D1A5F310900818CEF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EB7D2B1A5F310900818CEF /* LaunchScreen.xib */; };
 		29EB7D391A5F310900818CEF /* TicTacToeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D381A5F310900818CEF /* TicTacToeTests.m */; };
+		29EB7D441A5F5A5500818CEF /* WinConditionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D431A5F5A5500818CEF /* WinConditionChecker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		29EB7D321A5F310900818CEF /* TicTacToeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		29EB7D371A5F310900818CEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29EB7D381A5F310900818CEF /* TicTacToeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TicTacToeTests.m; sourceTree = "<group>"; };
+		29EB7D421A5F5A5500818CEF /* WinConditionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WinConditionChecker.h; sourceTree = "<group>"; };
+		29EB7D431A5F5A5500818CEF /* WinConditionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WinConditionChecker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,8 @@
 				29EB7D291A5F310900818CEF /* Images.xcassets */,
 				29EB7D2B1A5F310900818CEF /* LaunchScreen.xib */,
 				29EB7D1C1A5F310900818CEF /* Supporting Files */,
+				29EB7D421A5F5A5500818CEF /* WinConditionChecker.h */,
+				29EB7D431A5F5A5500818CEF /* WinConditionChecker.m */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
@@ -221,6 +226,7 @@
 			files = (
 				29EB7D251A5F310900818CEF /* RootViewController.m in Sources */,
 				29EB7D221A5F310900818CEF /* AppDelegate.m in Sources */,
+				29EB7D441A5F5A5500818CEF /* WinConditionChecker.m in Sources */,
 				29EB7D1F1A5F310900818CEF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

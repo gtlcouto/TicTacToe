@@ -7,6 +7,7 @@
 //
 
 #import "RootViewController.h"
+#import "WinConditionChecker.h"
 
 @interface RootViewController () <UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *labelRow1Column1;
@@ -21,10 +22,13 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *playerTurnLabel;
 
+@property WinConditionChecker *winConditionChecker;
+
 @property NSMutableSet *playerXMoves;
 @property NSMutableSet *playerYMoves;
 
 @property BOOL isPlayerXTurn;
+@property BOOL gameEnded;
 
 
 @end
@@ -35,6 +39,8 @@
     [super viewDidLoad];
     self.isPlayerXTurn = YES;
     self.playerXMoves = [[NSMutableSet alloc]init];
+    self.winConditionChecker = [[WinConditionChecker alloc]initWithWinningConditionsSet];
+
 
     
 }
@@ -49,23 +55,41 @@
 
     UILabel *labelTouched = [self findLabelUsingPoint: [gesture locationInView:self.view]];
     NSLog(@"%li", (long)labelTouched.tag);
+    NSString *labelTag = [NSString stringWithFormat:@"%li",(long)labelTouched.tag];
 
-    if (self.isPlayerXTurn)
+    if (![self.playerXMoves containsObject:labelTag]  &&
+        ![self.playerYMoves containsObject:labelTag] )
     {
-        labelTouched.text = @"X";
-        labelTouched.textColor = [UIColor blueColor];
-        [self.playerXMoves addObject:[NSNumber numberWithLong:labelTouched.tag]];
-        self.isPlayerXTurn = NO;
-        self.playerTurnLabel.text = @"O's turn";
+
+
+
+
+        if (self.isPlayerXTurn)
+        {
+            labelTouched.text = @"X";
+            labelTouched.textColor = [UIColor blueColor];
+
+            [self.playerXMoves addObject:labelTag];
+            self.isPlayerXTurn = NO;
+            self.playerTurnLabel.text = @"O's turn";
+            self.gameEnded = [self.winConditionChecker checkWinConditions:self.playerXMoves];
+        }
+        else
+        {
+            labelTouched.text = @"O";
+            labelTouched.textColor = [UIColor redColor];
+            [self.playerYMoves addObject:labelTag];
+            self.isPlayerXTurn = YES;
+            self.playerTurnLabel.text = @"X's turn";
+            self.gameEnded = [self.winConditionChecker checkWinConditions:self.playerYMoves];
+        }
+
+        if (self.gameEnded)
+        {
+            NSLog(@"GAME OVER");
+        }
     }
-    else
-    {
-        labelTouched.text = @"O";
-        labelTouched.textColor = [UIColor redColor];
-        [self.playerYMoves addObject:[NSNumber numberWithLong:labelTouched.tag]];
-        self.isPlayerXTurn = YES;
-        self.playerTurnLabel.text = @"X's turn";
-    }
+
 
 }
 
