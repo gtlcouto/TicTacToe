@@ -38,6 +38,7 @@
 
 @property BOOL isPlayerXTurn;
 @property BOOL didPlayerWin;
+@property BOOL didGameDraw;
 
 
 
@@ -88,8 +89,9 @@
                 self.playerTurnLabel.text = @"X's turn";
                 self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
             }
-
-            [self checkPlayerWin];
+            //add to set
+            //check set to subsets
+            [self hasGameEnded];
 
             self.isPlayerXTurn = !self.isPlayerXTurn;
 
@@ -104,11 +106,16 @@
 
                 self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
 
-            [self checkPlayerWin];
-            self.isPlayerXTurn = !self.isPlayerXTurn;
-            [self CPUMoves];
-            [self checkPlayerWin];
+            [self hasGameEnded];
 
+            self.isPlayerXTurn = !self.isPlayerXTurn;
+            if(!self.didPlayerWin && !self.didGameDraw)
+            {
+                [self CPUMoves];
+                [self hasGameEnded];
+            }
+            self.isPlayerXTurn = YES;
+            self.playerTurnLabel.text = @"X's turn";
 
 
         }
@@ -119,15 +126,6 @@
     }
 
 
-}
-
-- (void) changePlayer
-{
-    if (self.isPlayerXTurn)
-    {
-
-        self.playerTurnLabel.text = @"O's turn";
-    }
 }
 
 
@@ -173,38 +171,34 @@
 
 }
 
--(void)checkPlayerWin
-{
-    [self hasGameEnded:self.didPlayerWin];
-
-    if (!self.didPlayerWin && (self.playerOMoves.count + self.playerXMoves.count) == 9)
-    {
-        [self hasGameEndedAsDraw];
-    }
-}
-
--(void)hasGameEnded:(BOOL)gameEndedFlag
+-(void)hasGameEnded
 {
     UIAlertView *gameEndedAlertView = [[UIAlertView alloc]init];
     gameEndedAlertView.delegate = self;
     [gameEndedAlertView addButtonWithTitle: @"Play Again?"];
 
-    if (gameEndedFlag && self.isPlayerXTurn)
+    if (self.didPlayerWin && self.isPlayerXTurn)
     {
         gameEndedAlertView.title = [NSString stringWithFormat:@"Player X Wins!"];
         [gameEndedAlertView show];
     }
-    else if (gameEndedFlag)
+    else if (self.didPlayerWin)
     {
         gameEndedAlertView.title = [NSString stringWithFormat:@"Player O Wins!"];
         [gameEndedAlertView show];
 
     }
 
+    if (!self.didPlayerWin && (self.playerOMoves.count + self.playerXMoves.count) == 9)
+    {
+        [self drawAlert];
+        self.didGameDraw = true;
+    }
+
 
 }
 
--(void)hasGameEndedAsDraw
+-(void)drawAlert
 {
     UIAlertView *gameEndedAlertView = [[UIAlertView alloc]init];
     gameEndedAlertView.delegate = self;
@@ -235,6 +229,7 @@
     self.playerXMoves = [[NSMutableSet alloc]init];
     self.playerOMoves = [[NSMutableSet alloc]init];
     self.didPlayerWin = false;
+    self.didGameDraw = false;
     self.remainingTicks = 31;
 
 }
@@ -254,15 +249,16 @@
             [availableSpaces addObject:[NSString stringWithFormat:@"%li", (long)label.tag]];
         }
     }
-    NSUInteger randomIndex = arc4random() % [availableSpaces count];
-    UILabel *selectedSpace = (UILabel *)[self.view viewWithTag:[[availableSpaces objectAtIndex:randomIndex] integerValue]];
+    if(availableSpaces.count > 0){
+        NSUInteger randomIndex = arc4random() % [availableSpaces count];
 
-    selectedSpace.text = [NSString stringWithFormat:@"O"];
-    selectedSpace.textColor = [UIColor redColor];
-    [self.playerOMoves addObject:[availableSpaces objectAtIndex:randomIndex]];
-    self.playerTurnLabel.text = @"X's turn";
-    self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
-    self.isPlayerXTurn = YES;
+        UILabel *selectedSpace = (UILabel *)[self.view viewWithTag:[[availableSpaces objectAtIndex:randomIndex] integerValue]];
+        selectedSpace.text = [NSString stringWithFormat:@"O"];
+        selectedSpace.textColor = [UIColor redColor];
+        [self.playerOMoves addObject:[availableSpaces objectAtIndex:randomIndex]];
+        self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+    }
+
 }
 
 
