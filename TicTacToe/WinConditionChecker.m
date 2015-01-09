@@ -1,0 +1,68 @@
+//
+//  WinningCondition.m
+//  TicTacToe
+//
+//  Created by Diego Cichello on 1/8/15.
+//  Copyright (c) 2015 Mobile Makers. All rights reserved.
+//
+
+#import "WinConditionChecker.h"
+
+@interface WinConditionChecker  ()
+
+@property NSSet *winningCondition1;
+@property NSSet *winningCondition2;
+@property NSSet *winningCondition3;
+@property NSSet *winningCondition4;
+@property NSSet *winningCondition5;
+@property NSSet *winningCondition6;
+@property NSSet *winningCondition7;
+@property NSSet *winningCondition8;
+@property NSSet *allConditions;
+
+@end
+
+@implementation WinConditionChecker
+
+
+- (WinConditionChecker *) initWithWinningConditionsSet
+{
+    self.winningCondition1 = [NSSet setWithObjects:@"1",@"2",@"3",nil];
+    self.winningCondition2 = [NSSet setWithObjects:@"4",@"5",@"6",nil];
+    self.winningCondition3 = [NSSet setWithObjects:@"7",@"8",@"9",nil];
+    self.winningCondition4 = [NSSet setWithObjects:@"1",@"4",@"7",nil];
+    self.winningCondition5 = [NSSet setWithObjects:@"2",@"5",@"8",nil];
+    self.winningCondition6 = [NSSet setWithObjects:@"3",@"6",@"9",nil];
+    self.winningCondition7 = [NSSet setWithObjects:@"1",@"5",@"9",nil];
+    self.winningCondition8 = [NSSet setWithObjects:@"3",@"5",@"7",nil];
+    self.allConditions = [NSSet setWithObjects:
+                                        self.winningCondition1, self.winningCondition2,
+                                        self.winningCondition3, self.winningCondition4,
+                                        self.winningCondition5, self.winningCondition6,
+                                        self.winningCondition7, self.winningCondition8, nil];
+
+    return self;
+
+
+
+
+};
+
+
+
+
+- (BOOL) checkWinConditions: (NSSet *) currentSet
+{
+
+    
+    for (NSSet *set in self.allConditions)
+    {
+        if ([set isSubsetOfSet:currentSet])
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+@end
