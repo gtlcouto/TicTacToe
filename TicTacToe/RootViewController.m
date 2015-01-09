@@ -18,7 +18,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelRow3Column1;
 @property (weak, nonatomic) IBOutlet UILabel *labelRow3Column2;
 @property (weak, nonatomic) IBOutlet UILabel *labelRow3Column3;
+
 @property (weak, nonatomic) IBOutlet UILabel *playerTurnLabel;
+
+@property NSMutableSet *playerXMoves;
+@property NSMutableSet *playerYMoves;
+
+@property BOOL isPlayerXTurn;
 
 
 @end
@@ -27,6 +33,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isPlayerXTurn = YES;
+    self.playerXMoves = [[NSMutableSet alloc]init];
+
     
 }
 
@@ -34,26 +43,31 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (IBAction)tapHandler:(UITapGestureRecognizer *)gesture
 {
 
     UILabel *labelTouched = [self findLabelUsingPoint: [gesture locationInView:self.view]];
-    labelTouched.text = @"X";
+    NSLog(@"%li", (long)labelTouched.tag);
 
-
-    NSLog(@"%li",(long)[gesture view].tag);
-
-
-
+    if (self.isPlayerXTurn)
+    {
+        labelTouched.text = @"X";
+        labelTouched.textColor = [UIColor blueColor];
+        [self.playerXMoves addObject:[NSNumber numberWithLong:labelTouched.tag]];
+        self.isPlayerXTurn = NO;
+        self.playerTurnLabel.text = @"O's turn";
+    }
+    else
+    {
+        labelTouched.text = @"O";
+        labelTouched.textColor = [UIColor redColor];
+        [self.playerYMoves addObject:[NSNumber numberWithLong:labelTouched.tag]];
+        self.isPlayerXTurn = YES;
+        self.playerTurnLabel.text = @"X's turn";
+    }
 
 }
-
-- (void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p
-{
-    NSLog(@"Stopped here");
-
-}
-
 
 
 #pragma Other Methods
