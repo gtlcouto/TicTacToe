@@ -235,11 +235,6 @@
 
 }
 
-- (IBAction)prepareForUnwindSegue:(UIStoryboardSegue *)segue
-{
-
-}
-
 - (void) CPUMoves
 {
     NSMutableArray *availableSpaces = [[NSMutableArray alloc]init];
@@ -261,8 +256,6 @@
     }
 
 }
-
-
 
 
 @end
