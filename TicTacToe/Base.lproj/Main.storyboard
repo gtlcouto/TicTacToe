@@ -94,6 +94,18 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mz7-90-hG0">
+                                <rect key="frame" x="225" y="505" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="15" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gef-6q-2bW">
+                                <rect key="frame" x="26" y="514" width="146" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -102,6 +114,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="endedGameButton" destination="mz7-90-hG0" id="xSe-gg-Vx8"/>
                         <outlet property="labelRow1Column1" destination="1aw-bS-9lK" id="QHh-z3-z1I"/>
                         <outlet property="labelRow1Column2" destination="3yK-cu-Bfd" id="NHL-MW-WTZ"/>
                         <outlet property="labelRow1Column3" destination="LJb-A7-yQz" id="rCs-g6-5j1"/>
@@ -112,6 +125,7 @@
                         <outlet property="labelRow3Column2" destination="0xt-bF-5xf" id="fco-Wc-AhN"/>
                         <outlet property="labelRow3Column3" destination="gXF-u5-Wdg" id="vsg-vK-BCE"/>
                         <outlet property="playerTurnLabel" destination="DQT-2K-4ys" id="KZA-vJ-70s"/>
+                        <outlet property="winLabel" destination="gef-6q-2bW" id="ZG6-L9-ZW7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

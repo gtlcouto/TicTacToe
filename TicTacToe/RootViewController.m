@@ -9,7 +9,7 @@
 #import "RootViewController.h"
 #import "WinConditionChecker.h"
 
-@interface RootViewController () <UIGestureRecognizerDelegate>
+@interface RootViewController () <UIGestureRecognizerDelegate, UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *labelRow1Column1;
 @property (weak, nonatomic) IBOutlet UILabel *labelRow1Column2;
 @property (weak, nonatomic) IBOutlet UILabel *labelRow1Column3;
@@ -21,14 +21,16 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelRow3Column3;
 
 @property (weak, nonatomic) IBOutlet UILabel *playerTurnLabel;
+@property (strong, nonatomic) IBOutlet UILabel *winLabel;
 
 @property WinConditionChecker *winConditionChecker;
+@property (strong, nonatomic) IBOutlet UIButton *endedGameButton;
 
 @property NSMutableSet *playerXMoves;
-@property NSMutableSet *playerYMoves;
+@property NSMutableSet *playerOMoves;
 
 @property BOOL isPlayerXTurn;
-@property BOOL gameEnded;
+@property BOOL didPlayerWin;
 
 
 @end
@@ -39,6 +41,7 @@
     [super viewDidLoad];
     self.isPlayerXTurn = YES;
     self.playerXMoves = [[NSMutableSet alloc]init];
+    self.playerOMoves = [[NSMutableSet alloc]init];
     self.winConditionChecker = [[WinConditionChecker alloc]initWithWinningConditionsSet];
 
 
@@ -57,12 +60,9 @@
     NSLog(@"%li", (long)labelTouched.tag);
     NSString *labelTag = [NSString stringWithFormat:@"%li",(long)labelTouched.tag];
 
-    if (![self.playerXMoves containsObject:labelTag]  &&
-        ![self.playerYMoves containsObject:labelTag] )
+    if (!([self.playerXMoves containsObject:labelTag]  ||
+        [self.playerOMoves containsObject:labelTag]) )
     {
-
-
-
 
         if (self.isPlayerXTurn)
         {
@@ -70,24 +70,21 @@
             labelTouched.textColor = [UIColor blueColor];
 
             [self.playerXMoves addObject:labelTag];
-            self.isPlayerXTurn = NO;
             self.playerTurnLabel.text = @"O's turn";
-            self.gameEnded = [self.winConditionChecker checkWinConditions:self.playerXMoves];
+            self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
         }
         else
         {
             labelTouched.text = @"O";
             labelTouched.textColor = [UIColor redColor];
-            [self.playerYMoves addObject:labelTag];
-            self.isPlayerXTurn = YES;
+            [self.playerOMoves addObject:labelTag];
             self.playerTurnLabel.text = @"X's turn";
-            self.gameEnded = [self.winConditionChecker checkWinConditions:self.playerYMoves];
+            self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
         }
 
-        if (self.gameEnded)
-        {
-            NSLog(@"GAME OVER");
-        }
+        [self hasGameEnded:self.didPlayerWin];
+        self.isPlayerXTurn = !self.isPlayerXTurn;
+
     }
 
 
@@ -101,7 +98,7 @@
 {
     for (UILabel *label in self.view.subviews)
     {
-        if (CGRectContainsPoint(label.frame, point))
+        if (CGRectContainsPoint(label.frame, point) && label.tag != self.winLabel.tag)
         {
             return label;
         }
@@ -110,6 +107,28 @@
     return [[UILabel alloc]init];
 
 }
+
+-(void)hasGameEnded:(BOOL)gameEndedFlag
+{
+    UIAlertView *gameEndedAlertView = [[UIAlertView alloc]init];
+    gameEndedAlertView.delegate = self;
+    [gameEndedAlertView addButtonWithTitle: @"Play Again?"];
+
+    if (gameEndedFlag && self.isPlayerXTurn)
+    {
+        gameEndedAlertView.title = [NSString stringWithFormat:@"Player X Wins!"];
+        [gameEndedAlertView show];
+    }
+    else if (gameEndedFlag)
+    {
+        gameEndedAlertView.title = [NSString stringWithFormat:@"Player O Wins!"];
+        [gameEndedAlertView show];
+
+    }
+
+}
+
+
 
 
 @end
