@@ -62,46 +62,57 @@
 - (IBAction)tapHandler:(UITapGestureRecognizer *)gesture
 {
 
-    UILabel *labelTouched = [self findLabelUsingPoint: [gesture locationInView:self.view]];
+    UILabel *labelTouched = [self findLabelUsingPoint: [gesture locationInView:self.buttonView]];
     NSLog(@"%li", (long)labelTouched.tag);
     NSString *labelTag = [NSString stringWithFormat:@"%li",(long)labelTouched.tag];
 
     if (!([self.playerXMoves containsObject:labelTag]  ||
         [self.playerOMoves containsObject:labelTag]) )
     {
-
-        if (self.isPlayerXTurn)
+        if (self.isMultiplayer)
         {
-            labelTouched.text = @"X";
-            labelTouched.textColor = [UIColor blueColor];
-            self.playerTurnLabel.text = @"O's turn";
+            if (self.isPlayerXTurn)
+            {
+                labelTouched.text = @"X";
+                labelTouched.textColor = [UIColor blueColor];
+                self.playerTurnLabel.text = @"O's turn";
 
-            [self.playerXMoves addObject:labelTag];
+                [self.playerXMoves addObject:labelTag];
 
-            self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
-           if (!self.isMultiplayer)
-           {
-               [self CPUMoves];
-           }
+                self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
+            } else
+            {
+                labelTouched.text = @"O";
+                labelTouched.textColor = [UIColor redColor];
+                [self.playerOMoves addObject:labelTag];
+                self.playerTurnLabel.text = @"X's turn";
+                self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+            }
+
+            [self checkPlayerWin];
+
+            self.isPlayerXTurn = !self.isPlayerXTurn;
+
         }
-        else
+        else //singleplayer
         {
-            labelTouched.text = @"O";
-            labelTouched.textColor = [UIColor redColor];
-            [self.playerOMoves addObject:labelTag];
-            self.playerTurnLabel.text = @"X's turn";
-            self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+                labelTouched.text = @"X";
+                labelTouched.textColor = [UIColor blueColor];
+                self.playerTurnLabel.text = @"O's turn";
+
+                [self.playerXMoves addObject:labelTag];
+
+                self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
+
+            [self checkPlayerWin];
+            self.isPlayerXTurn = !self.isPlayerXTurn;
+            [self CPUMoves];
+            [self checkPlayerWin];
+
+
+
         }
 
-
-
-        [self hasGameEnded:self.didPlayerWin];
-
-        if (!self.didPlayerWin && (self.playerOMoves.count + self.playerXMoves.count) == 9)
-        {
-            [self hasGameEndedAsDraw];
-        }
-        self.isPlayerXTurn = !self.isPlayerXTurn;
         self.remainingTicks = 31;
         self.timeToPlay = [NSTimer scheduledTimerWithTimeInterval: 1.0 target: self selector: @selector(handleTimerTick) userInfo: nil repeats: NO];
 
@@ -160,6 +171,16 @@
 
     return [[UILabel alloc]init];
 
+}
+
+-(void)checkPlayerWin
+{
+    [self hasGameEnded:self.didPlayerWin];
+
+    if (!self.didPlayerWin && (self.playerOMoves.count + self.playerXMoves.count) == 9)
+    {
+        [self hasGameEndedAsDraw];
+    }
 }
 
 -(void)hasGameEnded:(BOOL)gameEndedFlag
@@ -239,9 +260,9 @@
     selectedSpace.text = [NSString stringWithFormat:@"O"];
     selectedSpace.textColor = [UIColor redColor];
     [self.playerOMoves addObject:[availableSpaces objectAtIndex:randomIndex]];
-    self.isPlayerXTurn = YES;
     self.playerTurnLabel.text = @"X's turn";
     self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+    self.isPlayerXTurn = YES;
 }
 
 
