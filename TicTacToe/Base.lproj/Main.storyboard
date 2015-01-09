@@ -4,6 +4,65 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="TBf-jd-mJk">
+            <objects>
+                <viewController id="zPq-Xa-wRt" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xch-59-ipK"/>
+                        <viewControllerLayoutGuide type="bottom" id="0mA-A0-TvR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gMc-Jv-FLa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tic Tac Toe" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOV-jl-hNR">
+                                <rect key="frame" x="117" y="122" width="86" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBU-e5-Boz">
+                                <rect key="frame" x="122" y="308" width="76" height="30"/>
+                                <state key="normal" title="Multiplayer">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="push" id="Zf1-Ie-CqC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bab-m4-Yjf">
+                                <rect key="frame" x="258" y="479" width="30" height="30"/>
+                                <state key="normal" title="?">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="MUc-zX-DcL" kind="modal" id="GQl-Rf-qlB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLR-x9-kqP">
+                                <rect key="frame" x="98" y="356" width="124" height="30"/>
+                                <state key="normal" title="Multiplayer Online">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Xq-4z-kTS">
+                                <rect key="frame" x="115" y="269" width="90" height="30"/>
+                                <state key="normal" title="Single Player">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="push" id="KIf-3y-psS"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8iR-O8-eqA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-264" y="350"/>
+        </scene>
         <!--Root View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
@@ -94,12 +153,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mz7-90-hG0">
-                                <rect key="frame" x="225" y="505" width="46" height="30"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" tag="15" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gef-6q-2bW">
                                 <rect key="frame" x="26" y="514" width="146" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -113,8 +166,8 @@
                             <outletCollection property="gestureRecognizers" destination="dS9-VC-sZE" appends="YES" id="SUS-jL-3sL"/>
                         </connections>
                     </view>
+                    <navigationItem key="navigationItem" id="ndp-3j-t8g"/>
                     <connections>
-                        <outlet property="endedGameButton" destination="mz7-90-hG0" id="xSe-gg-Vx8"/>
                         <outlet property="labelRow1Column1" destination="1aw-bS-9lK" id="QHh-z3-z1I"/>
                         <outlet property="labelRow1Column2" destination="3yK-cu-Bfd" id="NHL-MW-WTZ"/>
                         <outlet property="labelRow1Column3" destination="LJb-A7-yQz" id="rCs-g6-5j1"/>
@@ -125,6 +178,7 @@
                         <outlet property="labelRow3Column2" destination="0xt-bF-5xf" id="fco-Wc-AhN"/>
                         <outlet property="labelRow3Column3" destination="gXF-u5-Wdg" id="vsg-vK-BCE"/>
                         <outlet property="playerTurnLabel" destination="DQT-2K-4ys" id="KZA-vJ-70s"/>
+                        <outlet property="timerLabel" destination="gef-6q-2bW" id="XCZ-SE-MW9"/>
                         <outlet property="winLabel" destination="gef-6q-2bW" id="ZG6-L9-ZW7"/>
                     </connections>
                 </viewController>
@@ -137,10 +191,51 @@
             </objects>
             <point key="canvasLocation" x="162" y="341"/>
         </scene>
+        <!--Help View Controller-->
+        <scene sceneID="KUo-XY-FVw">
+            <objects>
+                <viewController id="MUc-zX-DcL" customClass="HelpViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bmV-B8-fZq"/>
+                        <viewControllerLayoutGuide type="bottom" id="2jv-F3-jvB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Vna-lk-6gp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f8I-30-OY8">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V3q-ff-Tkb">
+                                <rect key="frame" x="284" y="37" width="30" height="30"/>
+                                <state key="normal" title="X">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Pg3-t8-PUJ" kind="unwind" unwindAction="prepareForUnwindSegue:" id="R8Z-9a-TxU"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="GZg-Cn-PIE"/>
+                    <connections>
+                        <outlet property="webView" destination="f8I-30-OY8" id="rtA-9f-dJx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E8c-VY-hsX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Pg3-t8-PUJ" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-264" y="1026"/>
+        </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="Zf1-Ie-CqC"/>
+    </inferredMetricsTieBreakers>
 </document>

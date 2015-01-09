@@ -15,6 +15,7 @@
 		29EB7D2D1A5F310900818CEF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EB7D2B1A5F310900818CEF /* LaunchScreen.xib */; };
 		29EB7D391A5F310900818CEF /* TicTacToeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D381A5F310900818CEF /* TicTacToeTests.m */; };
 		29EB7D441A5F5A5500818CEF /* WinConditionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D431A5F5A5500818CEF /* WinConditionChecker.m */; };
+		29EB7D471A5F8B6F00818CEF /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D461A5F8B6F00818CEF /* HelpViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,8 @@
 		29EB7D381A5F310900818CEF /* TicTacToeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TicTacToeTests.m; sourceTree = "<group>"; };
 		29EB7D421A5F5A5500818CEF /* WinConditionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WinConditionChecker.h; sourceTree = "<group>"; };
 		29EB7D431A5F5A5500818CEF /* WinConditionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WinConditionChecker.m; sourceTree = "<group>"; };
+		29EB7D451A5F8B6F00818CEF /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
+		29EB7D461A5F8B6F00818CEF /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,8 @@
 				29EB7D1C1A5F310900818CEF /* Supporting Files */,
 				29EB7D421A5F5A5500818CEF /* WinConditionChecker.h */,
 				29EB7D431A5F5A5500818CEF /* WinConditionChecker.m */,
+				29EB7D451A5F8B6F00818CEF /* HelpViewController.h */,
+				29EB7D461A5F8B6F00818CEF /* HelpViewController.m */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29EB7D471A5F8B6F00818CEF /* HelpViewController.m in Sources */,
 				29EB7D251A5F310900818CEF /* RootViewController.m in Sources */,
 				29EB7D221A5F310900818CEF /* AppDelegate.m in Sources */,
 				29EB7D441A5F5A5500818CEF /* WinConditionChecker.m in Sources */,
