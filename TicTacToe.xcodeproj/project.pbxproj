@@ -16,6 +16,8 @@
 		29EB7D391A5F310900818CEF /* TicTacToeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D381A5F310900818CEF /* TicTacToeTests.m */; };
 		29EB7D441A5F5A5500818CEF /* WinConditionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D431A5F5A5500818CEF /* WinConditionChecker.m */; };
 		29EB7D471A5F8B6F00818CEF /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB7D461A5F8B6F00818CEF /* HelpViewController.m */; };
+		3582F72A1A60968800442F3C /* MCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3582F7291A60968800442F3C /* MCManager.m */; };
+		3582F72D1A60989700442F3C /* ConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3582F72C1A60989700442F3C /* ConnectionsViewController.m */; };
 		608541CC1A5F9939006A4491 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608541CB1A5F9939006A4491 /* RootViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +49,10 @@
 		29EB7D431A5F5A5500818CEF /* WinConditionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WinConditionChecker.m; sourceTree = "<group>"; };
 		29EB7D451A5F8B6F00818CEF /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		29EB7D461A5F8B6F00818CEF /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
+		3582F7281A60968800442F3C /* MCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCManager.h; path = ../../../../Downloads/MCDemo/MCDemo/MCManager.h; sourceTree = "<group>"; };
+		3582F7291A60968800442F3C /* MCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCManager.m; path = ../../../../Downloads/MCDemo/MCDemo/MCManager.m; sourceTree = "<group>"; };
+		3582F72B1A60989700442F3C /* ConnectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConnectionsViewController.h; path = ../../../../Downloads/MCDemo/MCDemo/ConnectionsViewController.h; sourceTree = "<group>"; };
+		3582F72C1A60989700442F3C /* ConnectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConnectionsViewController.m; path = ../../../../Downloads/MCDemo/MCDemo/ConnectionsViewController.m; sourceTree = "<group>"; };
 		608541CA1A5F9939006A4491 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		608541CB1A5F9939006A4491 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,8 +100,12 @@
 				29EB7D211A5F310900818CEF /* AppDelegate.m */,
 				29EB7D231A5F310900818CEF /* GameViewController.h */,
 				608541CA1A5F9939006A4491 /* RootViewController.h */,
+				3582F72B1A60989700442F3C /* ConnectionsViewController.h */,
+				3582F72C1A60989700442F3C /* ConnectionsViewController.m */,
 				608541CB1A5F9939006A4491 /* RootViewController.m */,
 				29EB7D241A5F310900818CEF /* GameViewController.m */,
+				3582F7281A60968800442F3C /* MCManager.h */,
+				3582F7291A60968800442F3C /* MCManager.m */,
 				29EB7D261A5F310900818CEF /* Main.storyboard */,
 				29EB7D291A5F310900818CEF /* Images.xcassets */,
 				29EB7D2B1A5F310900818CEF /* LaunchScreen.xib */,
@@ -234,11 +244,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3582F72D1A60989700442F3C /* ConnectionsViewController.m in Sources */,
 				29EB7D471A5F8B6F00818CEF /* HelpViewController.m in Sources */,
 				29EB7D251A5F310900818CEF /* GameViewController.m in Sources */,
 				608541CC1A5F9939006A4491 /* RootViewController.m in Sources */,
 				29EB7D221A5F310900818CEF /* AppDelegate.m in Sources */,
 				29EB7D441A5F5A5500818CEF /* WinConditionChecker.m in Sources */,
+				3582F72A1A60968800442F3C /* MCManager.m in Sources */,
 				29EB7D1F1A5F310900818CEF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

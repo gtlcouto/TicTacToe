@@ -8,6 +8,7 @@
 
 #import "RootViewController.h"
 #import "GameViewController.h"
+#import "ConnectionsViewController.h"
 
 @interface RootViewController ()
 @property BOOL isMultiplayer;
@@ -31,8 +32,15 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    GameViewController *vc = segue.destinationViewController;
-    vc.isMultiplayer = self.isMultiplayer;
+    if([[segue.destinationViewController restorationIdentifier]  isEqual: @"connection"])
+    {
+        ConnectionsViewController *vc = segue.destinationViewController;
+    } else {
+        GameViewController *vc = segue.destinationViewController;
+        vc.isMultiplayer = self.isMultiplayer;
+    }
+
+
 }
 /*
 #pragma mark - Navigation
