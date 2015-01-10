@@ -20,20 +20,26 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
-- (IBAction)singlePlayerButtonTapped:(id)sender
-{
-    self.isMultiplayer = NO;
-}
-- (IBAction)multiplayerButtonTapped:(id)sender
-{
-    self.isMultiplayer = YES;
-}
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)button
 {
     GameViewController *vc = segue.destinationViewController;
-    vc.isMultiplayer = self.isMultiplayer;
+
+    vc.isSinglePlayerEasy = false;
+    vc.isSinglePlayerHard = false;
+    vc.isMultiplayer = false;
+    switch (button.tag)
+    {
+        case 0: vc.isSinglePlayerEasy = true;break;
+        case 1: vc.isSinglePlayerHard = true; break;
+        case 2: vc.isMultiplayer = true; break;
+        default: break;
+    }
+
 }
+
+
 /*
 #pragma mark - Navigation
 

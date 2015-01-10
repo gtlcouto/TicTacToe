@@ -8,6 +8,8 @@
 
 #import "WinConditionChecker.h"
 
+
+
 @interface WinConditionChecker  ()
 
 @property NSSet *winningCondition1;
@@ -63,6 +65,142 @@
         }
     }
     return false;
+}
+
+- (NSString *) tryToWinTheGame: (NSSet *) playerXSet: (NSSet *) playerYSet
+{
+    int numberOfNumbersMissing =0;
+    NSMutableArray *numbersMissing = [[NSMutableArray alloc]init];
+
+
+    for (NSSet *set in self.allConditions)
+    {
+       for (NSString *number in set)
+       {
+           if (![playerYSet containsObject:number])
+           {
+               numberOfNumbersMissing++;
+               [numbersMissing addObject:number];
+           }
+       }
+
+        if (numberOfNumbersMissing == 1)
+        {
+            if (![playerXSet containsObject:numbersMissing[0]])
+            {
+                return [numbersMissing objectAtIndex:0];
+            }
+        }
+        numbersMissing = [[NSMutableArray alloc]init];
+        numberOfNumbersMissing =0;
+    }
+
+    return nil;
+
+
+}
+
+- (NSString *) blockPlayerFromWinningTheGame: (NSSet *) playerXSet: (NSSet *) playerYSet
+{
+    int numberOfNumbersMissing =0;
+    NSMutableArray *numbersMissing = [[NSMutableArray alloc]init];
+
+
+    for (NSSet *set in self.allConditions)
+    {
+        for (NSString *number in set)
+        {
+            if (![playerXSet containsObject:number])
+            {
+                numberOfNumbersMissing++;
+                [numbersMissing addObject:number];
+            }
+        }
+
+        if (numberOfNumbersMissing == 1)
+        {
+            if (![playerYSet containsObject:numbersMissing[0]])
+            {
+
+                return [numbersMissing objectAtIndex:0];
+            }
+        }
+
+        numbersMissing = [[NSMutableArray alloc]init];
+        numberOfNumbersMissing =0;
+    }
+    
+    return nil;
+
+}
+
+- (NSString *) blockFork: (NSSet *) playerXSet: (NSSet *) playerYSet
+{
+    int numberOfNumbersMissing =0;
+    NSMutableArray *numbersMissing = [[NSMutableArray alloc]init];
+    NSMutableArray *linesWithForkConditions =  [[NSMutableArray alloc]init];
+
+
+    for (NSSet *set in self.allConditions)
+    {
+        for (NSString *number in set)
+        {
+            if (![playerXSet containsObject:number])
+            {
+                numberOfNumbersMissing++;
+                [numbersMissing addObject:number];
+
+            }
+        }
+
+        if (numberOfNumbersMissing == 2)
+        {
+            [linesWithForkConditions addObject:set];
+        }
+
+        numbersMissing = [[NSMutableArray alloc]init];
+        numberOfNumbersMissing =0;
+    }
+    
+    for (NSSet *set in linesWithForkConditions)
+    {
+        for (NSSet *testedSet in linesWithForkConditions)
+        {
+            if (![set isEqual:testedSet])
+            {
+                if ([set intersectsSet:testedSet])
+                {
+                    for (NSString *number in testedSet)
+                    {
+                        if ([testedSet containsObject:number])
+                        {
+                            if ([playerXSet containsObject:@"1"] && [playerXSet containsObject:@"9"])
+                            {
+                                return @"8";
+
+                            }
+                            if ([playerXSet containsObject:@"7"] && [playerXSet containsObject:@"3"])
+                            {
+                                return @"2";
+
+                            }
+                            if (![playerXSet containsObject:number] && ![playerYSet containsObject:number]&& [set containsObject:number])
+                            {
+                                return number;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+    return  nil;
+}
+
+- (void) doAFork
+{
+    
 }
 
 @end

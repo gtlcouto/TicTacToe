@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *labelRow3Column3;
 @property NSSet *allGameLabels;
+@property NSArray *allGamesArray;
 
 @property (weak, nonatomic) IBOutlet UILabel *playerTurnLabel;
 @property (strong, nonatomic) IBOutlet UILabel *winLabel;
@@ -54,6 +55,10 @@
     self.winConditionChecker = [[WinConditionChecker alloc]initWithWinningConditionsSet];
     self.allGameLabels= [NSSet setWithObjects:self.labelRow1Column1,self.labelRow1Column2,self.labelRow1Column3,self.labelRow2Column1,self.labelRow2Column2,self.labelRow2Column3,self.labelRow3Column1, self.labelRow3Column2, self.labelRow3Column3,nil];
     [self createNewGame];
+
+    self.allGamesArray= [NSArray arrayWithObjects:self.labelRow1Column1,self.labelRow1Column2,self.labelRow1Column3,self.labelRow2Column1,self.labelRow2Column2,self.labelRow2Column3,self.labelRow3Column1, self.labelRow3Column2, self.labelRow3Column3,nil];
+    [self createNewGame];
+
     self.timeToPlay = [NSTimer scheduledTimerWithTimeInterval: 1.0 target: self selector: @selector(handleTimerTick) userInfo: nil repeats: YES];
 
 
@@ -250,7 +255,10 @@
             [availableSpaces addObject:[NSString stringWithFormat:@"%li", (long)label.tag]];
         }
     }
-    if(availableSpaces.count > 0){
+    if(availableSpaces.count > 0)
+    {
+        if (self.isSinglePlayerEasy)
+        {
         NSUInteger randomIndex = arc4random() % [availableSpaces count];
 
         UILabel *selectedSpace = (UILabel *)[self.view viewWithTag:[[availableSpaces objectAtIndex:randomIndex] integerValue]];
@@ -258,9 +266,83 @@
         selectedSpace.textColor = [UIColor redColor];
         [self.playerOMoves addObject:[availableSpaces objectAtIndex:randomIndex]];
         self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+        }
+        else if(self.isSinglePlayerHard)
+        {
+            NSArray *corners = [NSArray arrayWithObjects:self.labelRow1Column1,self.labelRow1Column3,self.labelRow3Column1,self.labelRow3Column3, nil];
+
+            if (self.playerXMoves.count ==1)
+            {
+                if ([self.playerXMoves containsObject:@"5"])
+                {
+                NSUInteger randomIndex = arc4random() % [corners count];
+                [self changeLabelToO:corners[randomIndex]];
+                UILabel *label = corners[randomIndex];
+                NSString *labelTag = [NSString stringWithFormat:@"%li",(long)label.tag];
+
+
+                [self.playerOMoves addObject:labelTag];
+
+                }
+                else
+                {
+
+                    [self changeLabelToO:self.labelRow2Column2];
+                    [self.playerOMoves addObject:[NSString stringWithFormat:@"%li", (long)self.labelRow2Column2.tag]];
+                    self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+
+                }
+            }
+            else
+            {
+                NSString *labelNumber = [self.winConditionChecker tryToWinTheGame:self.playerXMoves :self.playerOMoves];
+                if (labelNumber != nil)
+                {
+
+                    [self changeLabelToO:self.allGamesArray[[labelNumber intValue]-1]];
+                    [self.playerOMoves addObject:labelNumber];
+                    self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+
+                }
+                else
+                {
+                    labelNumber = [self.winConditionChecker blockPlayerFromWinningTheGame:self.playerXMoves:self.playerOMoves];
+                    if(labelNumber != nil)
+                    {
+                        [self changeLabelToO:self.allGamesArray[[labelNumber intValue]-1] ];
+                        [self.playerOMoves addObject:labelNumber];
+                        self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+                    }
+                    else
+                    {
+                        labelNumber = [self.winConditionChecker blockFork:self.playerXMoves:self.playerOMoves];
+                        [self changeLabelToO:self.allGamesArray[[labelNumber intValue]-1]];
+                        [self.playerOMoves addObject:labelNumber];
+                        [self.playerOMoves addObject:labelNumber];
+                        self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+
+                    }
+
+
+                }
+
+             }
+
+        }
     }
 
 }
+
+
+
+
+- (void) changeLabelToO:(UILabel *)label
+{
+    label.text = [NSString stringWithFormat:@"O"];
+    label.textColor = [UIColor redColor];
+}
+
+
 
 
 
