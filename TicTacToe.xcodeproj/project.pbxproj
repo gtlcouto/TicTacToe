@@ -99,6 +99,7 @@
 				29EB7D201A5F310900818CEF /* AppDelegate.h */,
 				29EB7D211A5F310900818CEF /* AppDelegate.m */,
 				29EB7D231A5F310900818CEF /* GameViewController.h */,
+				29EB7D241A5F310900818CEF /* GameViewController.m */,
 				608541CA1A5F9939006A4491 /* RootViewController.h */,
 				3582F72B1A60989700442F3C /* ConnectionsViewController.h */,
 				3582F72C1A60989700442F3C /* ConnectionsViewController.m */,

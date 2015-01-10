@@ -32,24 +32,18 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if([[segue.destinationViewController restorationIdentifier]  isEqual: @"connection"])
+
+
+if ([[segue.destinationViewController restorationIdentifier] isEqualToString:@"GameViewController"])
     {
-        ConnectionsViewController *vc = segue.destinationViewController;
-    } else {
         GameViewController *vc = segue.destinationViewController;
         vc.isMultiplayer = self.isMultiplayer;
     }
-
-
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(IBAction)prepareForUnwind:(UIStoryboardSegue *)segue
+{
 }
-*/
+
 
 @end

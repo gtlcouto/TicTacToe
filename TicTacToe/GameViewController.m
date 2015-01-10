@@ -134,7 +134,7 @@
     if (!self.didPlayerWin)
     {
         self.remainingTicks--;
-        self.timerLabel.text = [[NSNumber numberWithUnsignedInt: (int)self.remainingTicks] stringValue];
+        self.timerLabel.text = [NSString stringWithFormat:@"Time Left: %@", [NSNumber numberWithUnsignedInt: (int)self.remainingTicks]];
 
         if (self.remainingTicks <= 0) {
 
@@ -235,11 +235,6 @@
 
 }
 
-- (IBAction)prepareForUnwindSegue:(UIStoryboardSegue *)segue
-{
-
-}
-
 - (void) CPUMoves
 {
     NSMutableArray *availableSpaces = [[NSMutableArray alloc]init];
@@ -261,8 +256,6 @@
     }
 
 }
-
-
 
 
 @end

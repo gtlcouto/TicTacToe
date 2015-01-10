@@ -2,7 +2,7 @@
 //  main.m
 //  TicTacToe
 //
-//  Created by Diego Cichello on 1/8/15.
+//  Created by Gustavo Couto, Diego Cichello, Yi-Chin Sun on 1/8/15.
 //  Copyright (c) 2015 Mobile Makers. All rights reserved.
 //
 

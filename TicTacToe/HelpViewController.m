@@ -8,8 +8,9 @@
 
 #import "HelpViewController.h"
 
-@interface HelpViewController ()
+@interface HelpViewController () <UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
@@ -17,26 +18,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.webView.delegate = self;
     [self goToURLWithString:@"http://en.wikipedia.org/wiki/Tic-tac-toe"];
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)webViewDidStartLoad:(UIWebView *)webView
+{
+    self.spinner.hidden = NO;
+    [self.spinner startAnimating];
+
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self.spinner stopAnimating];
+    self.spinner.hidden = YES;
 }
-*/
 
+//Helper method: Loads page using URL string
 - (void) goToURLWithString:(NSString *)string
 {
     if (![string hasPrefix:@"http://"])
@@ -49,5 +49,7 @@
     [self.webView loadRequest:addressRequest];
     
 }
+
+
 
 @end
