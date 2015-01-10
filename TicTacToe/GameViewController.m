@@ -20,11 +20,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelRow3Column2;
 @property (weak, nonatomic) IBOutlet UILabel *labelRow3Column3;
 
-@property (strong, nonatomic) IBOutlet UIButton *endedGameButton;
 @property (weak, nonatomic) IBOutlet UILabel *timerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *playerTurnLabel;
 @property (strong, nonatomic) IBOutlet UILabel *winLabel;
 @property (strong, nonatomic) IBOutlet UIView *buttonView;
+
+@property (strong, nonatomic) IBOutletCollection(NSLayoutConstraint) NSArray *labelPortraitConstraints;
+
+@property (strong, nonatomic) IBOutletCollection(NSLayoutConstraint) NSArray *labelLandscapeConstraints;
 
 @property NSTimer *timeToPlay;
 @property NSUInteger remainingTicks;
@@ -47,6 +50,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.isPlayerXTurn = YES;
     //initialize player move sets to empty set
     self.playerXMoves = [[NSMutableSet alloc]init];
@@ -326,6 +330,27 @@
 {
     label.text = [NSString stringWithFormat:@"O"];
     label.textColor = [UIColor redColor];
+}
+
+#pragma mark Orientation Constraint Methods
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self updateViewConstraints];
+}
+
+- (void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    if (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
+    {
+        [self.buttonView removeConstraints:self.labelLandscapeConstraints];
+        [self.buttonView addConstraints:self.labelPortraitConstraints];
+    } else
+    {
+        [self.buttonView removeConstraints:self.labelPortraitConstraints];
+        [self.buttonView addConstraints:self.labelLandscapeConstraints];
+    }
 }
 
 @end
