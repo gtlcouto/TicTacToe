@@ -8,6 +8,7 @@
 
 #import "RootViewController.h"
 #import "GameViewController.h"
+#import "ConnectionsViewController.h"
 
 @interface RootViewController ()
 @property BOOL isMultiplayer;
@@ -24,30 +25,26 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)button
 {
-    GameViewController *vc = segue.destinationViewController;
-
-    vc.isSinglePlayerEasy = false;
-    vc.isSinglePlayerHard = false;
-    vc.isMultiplayer = false;
-    switch (button.tag)
-    {
-        case 0: vc.isSinglePlayerEasy = true;break;
-        case 1: vc.isSinglePlayerHard = true; break;
-        case 2: vc.isMultiplayer = true; break;
-        default: break;
-    }
-
+    if ([[segue.destinationViewController restorationIdentifier] isEqualToString:@"GameViewController"])
+        {
+            GameViewController *vc = segue.destinationViewController;
+            vc.isMultiplayer = self.isMultiplayer;
+            vc.isSinglePlayerEasy = false;
+            vc.isSinglePlayerHard = false;
+            vc.isMultiplayer = false;
+            switch (button.tag)
+            {
+                case 0: vc.isSinglePlayerEasy = true;break;
+                case 1: vc.isSinglePlayerHard = true; break;
+                case 2: vc.isMultiplayer = true; break;
+                default: break;
+            }
+        }
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(IBAction)prepareForUnwind:(UIStoryboardSegue *)segue
+{
 }
-*/
+
 
 @end
