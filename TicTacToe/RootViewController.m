@@ -28,15 +28,14 @@
     if ([[segue.destinationViewController restorationIdentifier] isEqualToString:@"GameViewController"])
         {
             GameViewController *vc = segue.destinationViewController;
-            vc.isMultiplayer = self.isMultiplayer;
             vc.isSinglePlayerEasy = false;
             vc.isSinglePlayerHard = false;
             vc.isMultiplayer = false;
             switch (button.tag)
             {
                 case 0: vc.isSinglePlayerEasy = true;break;
-                case 1: vc.isSinglePlayerHard = true; break;
-                case 2: vc.isMultiplayer = true; break;
+                case 1: vc.isSinglePlayerHard = true;break;
+                case 2: vc.isMultiplayer = true;break;
                 default: break;
             }
         }
