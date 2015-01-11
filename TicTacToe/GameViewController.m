@@ -59,17 +59,18 @@
     [super viewDidLoad];
 
     self.isPlayerXTurn = YES;
-    //initialize player move sets to empty set
+    //Initialize player move sets to empty set
     self.playerXMoves = [[NSMutableSet alloc]init];
     self.playerOMoves = [[NSMutableSet alloc]init];
 
-    //initialize the winConditionChecker with all the win conditions
+    //Initialize the winConditionChecker with all the win conditions
     self.winConditionChecker = [[WinConditionChecker alloc]initWithWinningConditionsSet];
 
     //Put the labels into NSArray for easy iteration
     self.gameLabelsArray= [NSArray arrayWithObjects:self.labelRow1Column1,self.labelRow1Column2,self.labelRow1Column3,self.labelRow2Column1,self.labelRow2Column2,self.labelRow2Column3,self.labelRow3Column1, self.labelRow3Column2, self.labelRow3Column3,nil];
     [self createNewGame];
 
+    //Initialize timer
     self.timeToPlay = [NSTimer scheduledTimerWithTimeInterval: 1.0 target: self selector: @selector(handleTimerTick) userInfo: nil repeats: YES];
 
     _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -85,7 +86,7 @@
     UILabel *labelTouched = [self findLabelUsingPoint: [gesture locationInView:self.buttonView]];
     NSString *labelTag = [NSString stringWithFormat:@"%li",(long)labelTouched.tag];
 
-    //if labelTouched has not been played and also exists
+    //If labelTouched has not been played and also exists
     if ((!([self.playerXMoves containsObject:labelTag]  ||
         [self.playerOMoves containsObject:labelTag])) && labelTouched!=nil )
     {
@@ -104,7 +105,7 @@
         self.timeToPlay = [NSTimer scheduledTimerWithTimeInterval: 1.0 target: self selector: @selector(handleTimerTick) userInfo: nil repeats: NO];
 
     }
-    //multiplayer multiple devices logic
+    //Multiplayer multiple devices logic
     if (self.isMPCMultiplayer)
     {
         if ((!([self.playerXMoves containsObject:labelTag]  ||
@@ -190,6 +191,7 @@
 {
     NSArray *corners = [NSArray arrayWithObjects:self.labelRow1Column1,self.labelRow1Column3,self.labelRow3Column1,self.labelRow3Column3, nil];
 
+    //First move
     if (self.playerXMoves.count ==1)
     {
         //if player X plays center space on first move
@@ -205,19 +207,20 @@
         }
         else
         {
-
+            //CPU plays in center
             [self changeLabelToO:self.labelRow2Column2];
             [self.playerOMoves addObject:[NSString stringWithFormat:@"%li", (long)self.labelRow2Column2.tag]];
             self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
 
         }
     }
+    //Subsequent moves
     else
     {
         NSString *labelNumber = [self.winConditionChecker tryToWinTheGame:self.playerXMoves :self.playerOMoves];
+        //If there's a move that lets CPU win game, have CPU play move
         if (labelNumber != nil)
         {
-
             [self changeLabelToO:self.gameLabelsArray[[labelNumber intValue]-1]];
             [self.playerOMoves addObject:labelNumber];
             self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
@@ -225,7 +228,8 @@
         }
         else
         {
-            labelNumber = [self.winConditionChecker blockPlayerFromWinningTheGame:self.playerXMoves:self.playerOMoves];
+            labelNumber = [self.winConditionChecker blockPlayerFromWinningTheGame:self.playerXMoves set2:self.playerOMoves];
+            //if there's a move that blocks player from winning, have CPU play move
             if(labelNumber != nil)
             {
                 [self changeLabelToO:self.gameLabelsArray[[labelNumber intValue]-1] ];
@@ -234,9 +238,10 @@
             }
             else
             {
-                labelNumber = [self.winConditionChecker blockFork:self.playerXMoves:self.playerOMoves];
+                //if there's a move that block player fork, have CPU play move
+                labelNumber = [self.winConditionChecker blockFork:self.playerXMoves set2:self.playerOMoves];
+
                 [self changeLabelToO:self.gameLabelsArray[[labelNumber intValue]-1]];
-                [self.playerOMoves addObject:labelNumber];
                 [self.playerOMoves addObject:labelNumber];
                 self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
 

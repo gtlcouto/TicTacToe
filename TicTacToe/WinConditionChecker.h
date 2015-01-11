@@ -17,8 +17,10 @@
 - (BOOL) checkWinConditions: (NSSet *) currentSet;
 - (WinConditionChecker *) initWithWinningConditionsSet;
 - (NSString *) tryToWinTheGame: (NSSet *) playerXSet :(NSSet *) playerYSet;
-- (NSString *) blockPlayerFromWinningTheGame: (NSSet *) playerXSet: (NSSet *) playerYSet;
-- (NSString *) blockFork: (NSSet *) playerXSet: (NSSet *) playerYSet;
+- (NSString *) blockPlayerFromWinningTheGame:(NSSet *) playerXSet
+                                  set2:(NSSet *)playerOSet;
+- (NSString *) blockFork:(NSSet *) playerXSet
+              set2:(NSSet *) playerOSet;
 
 
 

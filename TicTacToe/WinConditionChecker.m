@@ -67,7 +67,8 @@
     return NO;
 }
 
-- (NSString *) tryToWinTheGame: (NSSet *) playerXSet: (NSSet *) playerYSet
+- (NSString *) tryToWinTheGame:(NSSet *) playerXSet
+                              :(NSSet *) playerOSet
 {
     int numberOfNumbersMissing =0;
     NSMutableArray *numbersMissing = [[NSMutableArray alloc]init];
@@ -77,7 +78,7 @@
     {
        for (NSString *number in set)
        {
-           if (![playerYSet containsObject:number])
+           if (![playerOSet containsObject:number])
            {
                numberOfNumbersMissing++;
                [numbersMissing addObject:number];
@@ -100,7 +101,8 @@
 
 }
 
-- (NSString *) blockPlayerFromWinningTheGame: (NSSet *) playerXSet: (NSSet *) playerYSet
+- (NSString *) blockPlayerFromWinningTheGame:(NSSet *) playerXSet
+                                            set2:(NSSet *) playerOSet
 {
     int numberOfNumbersMissing =0;
     NSMutableArray *numbersMissing = [[NSMutableArray alloc]init];
@@ -119,7 +121,7 @@
 
         if (numberOfNumbersMissing == 1)
         {
-            if (![playerYSet containsObject:numbersMissing[0]])
+            if (![playerOSet containsObject:numbersMissing[0]])
             {
 
                 return [numbersMissing objectAtIndex:0];
@@ -134,7 +136,8 @@
 
 }
 
-- (NSString *) blockFork: (NSSet *) playerXSet: (NSSet *) playerYSet
+- (NSString *) blockFork:(NSSet *) playerXSet
+                    set2:(NSSet *) playerOSet
 {
     int numberOfNumbersMissing =0;
     NSMutableArray *numbersMissing = [[NSMutableArray alloc]init];
@@ -184,7 +187,7 @@
                                 return @"2";
 
                             }
-                            if (![playerXSet containsObject:number] && ![playerYSet containsObject:number]&& [set containsObject:number])
+                            if (![playerXSet containsObject:number] && ![playerOSet containsObject:number]&& [set containsObject:number])
                             {
                                 return number;
                             }
