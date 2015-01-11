@@ -13,6 +13,7 @@
 @property BOOL isSinglePlayerEasy;
 @property BOOL isSinglePlayerHard;
 @property BOOL isMultiplayer;
+@property BOOL isMPCMultiplayer;
 
 
 @end

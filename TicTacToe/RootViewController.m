@@ -11,7 +11,6 @@
 #import "ConnectionsViewController.h"
 
 @interface RootViewController ()
-@property BOOL isMultiplayer;
 
 @end
 
@@ -31,11 +30,13 @@
             vc.isSinglePlayerEasy = false;
             vc.isSinglePlayerHard = false;
             vc.isMultiplayer = false;
+            vc.isMPCMultiplayer = false;
             switch (button.tag)
             {
                 case 0: vc.isSinglePlayerEasy = true;break;
                 case 1: vc.isSinglePlayerHard = true;break;
                 case 2: vc.isMultiplayer = true;break;
+                case 3: vc.isMPCMultiplayer = true;break;
                 default: break;
             }
         }
