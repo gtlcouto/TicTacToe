@@ -327,7 +327,6 @@
                         <outlet property="labelRow3Column3" destination="gXF-u5-Wdg" id="vsg-vK-BCE"/>
                         <outlet property="playerTurnLabel" destination="DQT-2K-4ys" id="KZA-vJ-70s"/>
                         <outlet property="timerLabel" destination="gef-6q-2bW" id="XCZ-SE-MW9"/>
-                        <outlet property="winLabel" destination="gef-6q-2bW" id="ZG6-L9-ZW7"/>
                         <outletCollection property="labelPortraitConstraints" destination="7oe-QC-COe" id="Cz8-4k-2Ey"/>
                         <outletCollection property="labelLandscapeConstraints" destination="hes-nC-Jzo" id="N19-wW-1MQ"/>
                         <outletCollection property="labelPortraitConstraints" destination="SHK-Sh-9En" id="JyI-W3-vdI"/>

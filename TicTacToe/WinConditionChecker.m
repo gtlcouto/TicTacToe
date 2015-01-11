@@ -61,10 +61,10 @@
     {
         if ([set isSubsetOfSet:currentSet])
         {
-            return true;
+            return YES;
         }
     }
-    return false;
+    return NO;
 }
 
 - (NSString *) tryToWinTheGame: (NSSet *) playerXSet: (NSSet *) playerYSet

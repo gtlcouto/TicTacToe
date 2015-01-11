@@ -10,8 +10,10 @@
 #import "WinConditionChecker.h"
 #import "AppDelegate.h"
 
+#pragma mark - Properties
 @interface GameViewController () <UIGestureRecognizerDelegate, UIAlertViewDelegate>
-@property (strong, nonatomic) AppDelegate *appDelegate;
+
+#pragma mark Game Labels
 @property (weak, nonatomic) IBOutlet UILabel *labelRow1Column1;
 @property (weak, nonatomic) IBOutlet UILabel *labelRow1Column2;
 @property (weak, nonatomic) IBOutlet UILabel *labelRow1Column3;
@@ -22,19 +24,22 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelRow3Column2;
 @property (weak, nonatomic) IBOutlet UILabel *labelRow3Column3;
 
+@property NSArray *gameLabelsArray;
+
+#pragma mark Other Labels
 @property (weak, nonatomic) IBOutlet UILabel *timerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *playerTurnLabel;
-@property (strong, nonatomic) IBOutlet UILabel *winLabel;
+
 @property (strong, nonatomic) IBOutlet UIView *buttonView;
 
+#pragma mark View Constraints
 @property (strong, nonatomic) IBOutletCollection(NSLayoutConstraint) NSArray *labelPortraitConstraints;
 @property (strong, nonatomic) IBOutletCollection(NSLayoutConstraint) NSArray *labelLandscapeConstraints;
 
+#pragma mark Misc. Properties
 @property NSTimer *timeToPlay;
 @property NSUInteger remainingTicks;
 @property WinConditionChecker *winConditionChecker;
-
-@property NSArray *gameLabelsArray;
 
 @property NSMutableSet *playerXMoves;
 @property NSMutableSet *playerOMoves;
@@ -43,8 +48,11 @@
 @property BOOL didPlayerWin;
 @property BOOL didGameDraw;
 
+@property (strong, nonatomic) AppDelegate *appDelegate;
+
 @end
 
+#pragma mark - Implementation
 @implementation GameViewController
 
 - (void)viewDidLoad {
@@ -84,73 +92,33 @@
         //Multiplayer
         if (self.isMultiplayer)
         {
-            if (self.isPlayerXTurn)
-            {
-                labelTouched.text = @"X";
-                labelTouched.textColor = [UIColor blueColor];
-                self.playerTurnLabel.text = @"O's turn";
-
-                [self.playerXMoves addObject:labelTag];
-                self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
-            }
-            else
-            {
-                labelTouched.text = @"O";
-                labelTouched.textColor = [UIColor redColor];
-                self.playerTurnLabel.text = @"X's turn";
-
-                [self.playerOMoves addObject:labelTag];
-                self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
-            }
-
-            [self gameEndedCheck];
-
-            self.isPlayerXTurn = !self.isPlayerXTurn;
+            [self multiplayerLogic:labelTouched];
 
         }
         //Singleplayer
         else
         {
-            labelTouched.text = @"X";
-            labelTouched.textColor = [UIColor blueColor];
-            self.playerTurnLabel.text = @"O's turn";
-
-            [self.playerXMoves addObject:labelTag];
-            self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
-
-            [self gameEndedCheck];
-
-            self.isPlayerXTurn = !self.isPlayerXTurn;
-            if(!self.didPlayerWin && !self.didGameDraw)
-            {
-                [self CPUMoves];
-                [self gameEndedCheck];
-            }
-            self.isPlayerXTurn = YES;
-            self.playerTurnLabel.text = @"X's turn";
+            [self singleplayerLogic:labelTouched];
         }
         self.remainingTicks = 31;
         self.timeToPlay = [NSTimer scheduledTimerWithTimeInterval: 1.0 target: self selector: @selector(handleTimerTick) userInfo: nil repeats: NO];
 
     }
     //multiplayer multiple devices logic
-    if (self.isMPCMultiplayer) {
+    if (self.isMPCMultiplayer)
+    {
         if ((!([self.playerXMoves containsObject:labelTag]  ||
                [self.playerOMoves containsObject:labelTag])) && labelTouched!=nil ){
             [self sendMessage:labelTag];
             if (self.isPlayerXTurn)
             {
-                labelTouched.text = @"X";
-                labelTouched.textColor = [UIColor blueColor];
+                [self changeLabelToX:labelTouched];
                 self.playerTurnLabel.text = @"O's turn";
-
                 [self.playerXMoves addObject:labelTag];
-
                 self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
             } else
             {
-                labelTouched.text = @"O";
-                labelTouched.textColor = [UIColor redColor];
+                [self changeLabelToO:labelTouched];
                 [self.playerOMoves addObject:labelTag];
                 self.playerTurnLabel.text = @"X's turn";
                 self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
@@ -160,84 +128,127 @@
             [self gameEndedCheck];
 
             self.isPlayerXTurn = !self.isPlayerXTurn;
-            
-            
         }
-        
+    }
+}
+
+- (void) createNewGame
+{
+    for (UILabel *label in self.gameLabelsArray)
+    {
+        label.text = @"";
     }
 
+    self.isPlayerXTurn = YES;
+    self.playerTurnLabel.text = @"X's turn";
+    self.playerXMoves = [[NSMutableSet alloc]init];
+    self.playerOMoves = [[NSMutableSet alloc]init];
+    self.didPlayerWin = NO;
+    self.didGameDraw = NO;
+    self.remainingTicks = 31;
 
 }
 
-
--(void)handleTimerTick
+- (void) CPUMoves
 {
-    if (!self.didPlayerWin)
+    NSMutableArray *availableSpaces = [[NSMutableArray alloc]init];
+    for (UILabel *label in self.gameLabelsArray)
     {
-        self.remainingTicks--;
-        self.timerLabel.text = [NSString stringWithFormat:@"Time Left: %@", [NSNumber numberWithUnsignedInt: (int)self.remainingTicks]];
+        if ([label.text isEqualToString:@""] || !(label.text))
+        {
+            [availableSpaces addObject:[NSString stringWithFormat:@"%li", (long)label.tag]];
+        }
+    }
+    if(availableSpaces.count > 0)
+    {
+        if (self.isSinglePlayerEasy)
+        {
+            [self CPUMoveEasy:availableSpaces];
+        }
+        //Hard Single Player - CPU implements optimal TicTacToe strategy
+        else if(self.isSinglePlayerHard)
+        {
+            [self CPUMoveHard];
 
-        if (self.remainingTicks <= 0) {
+        }
+    }
+    
+}
 
-            if (self.isPlayerXTurn)
+#pragma mark CPU AI Methods
+- (void)CPUMoveEasy:(NSMutableArray *)availableSpaces
+{
+    NSUInteger randomIndex = arc4random() % [availableSpaces count];
+
+    UILabel *selectedSpace = (UILabel *)[self.view viewWithTag:[[availableSpaces objectAtIndex:randomIndex] integerValue]];
+    [self changeLabelToO:selectedSpace];
+    [self.playerOMoves addObject:[availableSpaces objectAtIndex:randomIndex]];
+    self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+}
+
+- (void)CPUMoveHard
+{
+    NSArray *corners = [NSArray arrayWithObjects:self.labelRow1Column1,self.labelRow1Column3,self.labelRow3Column1,self.labelRow3Column3, nil];
+
+    if (self.playerXMoves.count ==1)
+    {
+        //if player X plays center space on first move
+        if ([self.playerXMoves containsObject:@"5"])
+        {
+            //CPU places move on random space
+            NSUInteger randomIndex = arc4random() % [corners count];
+            [self changeLabelToO:corners[randomIndex]];
+            UILabel *label = corners[randomIndex];
+            NSString *labelTag = [NSString stringWithFormat:@"%li",(long)label.tag];
+            [self.playerOMoves addObject:labelTag];
+
+        }
+        else
+        {
+
+            [self changeLabelToO:self.labelRow2Column2];
+            [self.playerOMoves addObject:[NSString stringWithFormat:@"%li", (long)self.labelRow2Column2.tag]];
+            self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+
+        }
+    }
+    else
+    {
+        NSString *labelNumber = [self.winConditionChecker tryToWinTheGame:self.playerXMoves :self.playerOMoves];
+        if (labelNumber != nil)
+        {
+
+            [self changeLabelToO:self.gameLabelsArray[[labelNumber intValue]-1]];
+            [self.playerOMoves addObject:labelNumber];
+            self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+
+        }
+        else
+        {
+            labelNumber = [self.winConditionChecker blockPlayerFromWinningTheGame:self.playerXMoves:self.playerOMoves];
+            if(labelNumber != nil)
             {
-
-                self.playerTurnLabel.text = @"O's turn";
+                [self changeLabelToO:self.gameLabelsArray[[labelNumber intValue]-1] ];
+                [self.playerOMoves addObject:labelNumber];
+                self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
             }
             else
             {
-                self.playerTurnLabel.text = @"X's turn";
+                labelNumber = [self.winConditionChecker blockFork:self.playerXMoves:self.playerOMoves];
+                [self changeLabelToO:self.gameLabelsArray[[labelNumber intValue]-1]];
+                [self.playerOMoves addObject:labelNumber];
+                [self.playerOMoves addObject:labelNumber];
+                self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+
             }
-            self.isPlayerXTurn = !self.isPlayerXTurn;
-            self.remainingTicks = 30;
+
+
         }
+
     }
 }
 
-#pragma Other Methods
-// --------------------------------------- Other Methods ------------------------------------------
-
-- (UILabel *)findLabelUsingPoint: (CGPoint)point
-{
-    UILabel  *returnLabel = nil;
-    for (UILabel *label in self.gameLabelsArray)
-    {
-        if (CGRectContainsPoint(label.frame, point) && label.tag != self.winLabel.tag)
-        {
-            return label;
-        }
-    }
-    return returnLabel;
-
-}
-
--(void)gameEndedCheck
-{
-    UIAlertView *gameEndedAlertView = [[UIAlertView alloc]init];
-    gameEndedAlertView.delegate = self;
-    [gameEndedAlertView addButtonWithTitle: @"Play Again?"];
-
-    if (self.didPlayerWin && self.isPlayerXTurn)
-    {
-        gameEndedAlertView.title = [NSString stringWithFormat:@"Player X Wins!"];
-        [gameEndedAlertView show];
-    }
-    else if (self.didPlayerWin)
-    {
-        gameEndedAlertView.title = [NSString stringWithFormat:@"Player O Wins!"];
-        [gameEndedAlertView show];
-
-    }
-    //if neither player wins and all spaces have been filled
-    if (!self.didPlayerWin && (self.playerOMoves.count + self.playerXMoves.count) == 9)
-    {
-        [self drawAlert];
-        self.didGameDraw = true;
-    }
-
-
-}
-
+#pragma marks Alert Methods
 -(void)drawAlert
 {
     UIAlertView *gameEndedAlertView = [[UIAlertView alloc]init];
@@ -256,118 +267,61 @@
     }
 }
 
-- (void) createNewGame
-
+#pragma mark TicTacToe Logic Helper Methods
+- (void)multiplayerLogic:(UILabel *)labelTouched
 {
-    for (UILabel *label in self.gameLabelsArray)
+    NSString *labelTag = [NSString stringWithFormat:@"%li", labelTouched.tag];
+    if (self.isPlayerXTurn)
     {
-        label.text = @"";
+        [self changeLabelToX:labelTouched];
+        self.playerTurnLabel.text = @"O's turn";
+        [self.playerXMoves addObject:labelTag];
+        self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
     }
-    self.isPlayerXTurn = true;
+    else
+    {
+        [self changeLabelToO:labelTouched];
+        self.playerTurnLabel.text = @"X's turn";
+        [self.playerOMoves addObject:labelTag];
+        self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+    }
+
+    [self gameEndedCheck];
+
+    self.isPlayerXTurn = !self.isPlayerXTurn;
+}
+
+- (void)singleplayerLogic:(UILabel *)labelTouched
+{
+    NSString *labelTag = [NSString stringWithFormat:@"%li", labelTouched.tag];
+    [self changeLabelToX:labelTouched];
+    self.playerTurnLabel.text = @"O's turn";
+    [self.playerXMoves addObject:labelTag];
+    self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
+
+    [self gameEndedCheck];
+
+    self.isPlayerXTurn = !self.isPlayerXTurn;
+    if(!self.didPlayerWin && !self.didGameDraw)
+    {
+        [self CPUMoves];
+        [self gameEndedCheck];
+    }
+    self.isPlayerXTurn = YES;
     self.playerTurnLabel.text = @"X's turn";
-    self.playerXMoves = [[NSMutableSet alloc]init];
-    self.playerOMoves = [[NSMutableSet alloc]init];
-    self.didPlayerWin = false;
-    self.didGameDraw = false;
-    self.remainingTicks = 31;
-
 }
 
-- (void) CPUMoves
-{
-    NSMutableArray *availableSpaces = [[NSMutableArray alloc]init];
-    for (UILabel *label in self.gameLabelsArray)
-    {
-        if ([label.text isEqualToString:@""] || !(label.text))
-        {
-            [availableSpaces addObject:[NSString stringWithFormat:@"%li", (long)label.tag]];
-        }
-    }
-    if(availableSpaces.count > 0)
-    {
-        //Easy Single Player - CPU does random moves
-        if (self.isSinglePlayerEasy)
-        {
-            NSUInteger randomIndex = arc4random() % [availableSpaces count];
-
-            UILabel *selectedSpace = (UILabel *)[self.view viewWithTag:[[availableSpaces objectAtIndex:randomIndex] integerValue]];
-            selectedSpace.text = [NSString stringWithFormat:@"O"];
-            selectedSpace.textColor = [UIColor redColor];
-            [self.playerOMoves addObject:[availableSpaces objectAtIndex:randomIndex]];
-            self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
-        }
-        //Hard Single Player - CPU implements optimal TicTacToe strategy
-        else if(self.isSinglePlayerHard)
-        {
-            NSArray *corners = [NSArray arrayWithObjects:self.labelRow1Column1,self.labelRow1Column3,self.labelRow3Column1,self.labelRow3Column3, nil];
-
-            if (self.playerXMoves.count ==1)
-            {
-                //if player X plays center space on first move
-                if ([self.playerXMoves containsObject:@"5"])
-                {
-                    //CPU places move on random space
-                    NSUInteger randomIndex = arc4random() % [corners count];
-                    [self changeLabelToO:corners[randomIndex]];
-                    UILabel *label = corners[randomIndex];
-                    NSString *labelTag = [NSString stringWithFormat:@"%li",(long)label.tag];
-                    [self.playerOMoves addObject:labelTag];
-
-                }
-                else
-                {
-
-                    [self changeLabelToO:self.labelRow2Column2];
-                    [self.playerOMoves addObject:[NSString stringWithFormat:@"%li", (long)self.labelRow2Column2.tag]];
-                    self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
-
-                }
-            }
-            else
-            {
-                NSString *labelNumber = [self.winConditionChecker tryToWinTheGame:self.playerXMoves :self.playerOMoves];
-                if (labelNumber != nil)
-                {
-
-                    [self changeLabelToO:self.gameLabelsArray[[labelNumber intValue]-1]];
-                    [self.playerOMoves addObject:labelNumber];
-                    self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
-
-                }
-                else
-                {
-                    labelNumber = [self.winConditionChecker blockPlayerFromWinningTheGame:self.playerXMoves:self.playerOMoves];
-                    if(labelNumber != nil)
-                    {
-                        [self changeLabelToO:self.gameLabelsArray[[labelNumber intValue]-1] ];
-                        [self.playerOMoves addObject:labelNumber];
-                        self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
-                    }
-                    else
-                    {
-                        labelNumber = [self.winConditionChecker blockFork:self.playerXMoves:self.playerOMoves];
-                        [self changeLabelToO:self.gameLabelsArray[[labelNumber intValue]-1]];
-                        [self.playerOMoves addObject:labelNumber];
-                        [self.playerOMoves addObject:labelNumber];
-                        self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
-                        
-                    }
-                    
-                    
-                }
-                
-            }
-            
-        }
-    }
-    
-}
-
-
+#pragma mark Change Label Helper Methods
 - (void) changeLabelToO:(UILabel *)label
 {
     label.text = [NSString stringWithFormat:@"O"];
     label.textColor = [UIColor redColor];
+}
+
+- (void) changeLabelToX:(UILabel *)label
+{
+    label.text = [NSString stringWithFormat:@"X"];
+    label.textColor = [UIColor blueColor];
 }
 
 #pragma mark Orientation Constraint Methods
@@ -391,7 +345,7 @@
     }
 }
 
-#pragma mark - Peer-to-Peer Connectivity
+#pragma mark Peer-to-Peer Connectivity
 
 -(void)sendMessage:(NSString *)rawDataString{
     NSData *dataToSend = [rawDataString dataUsingEncoding:NSUTF8StringEncoding];
@@ -423,6 +377,71 @@
             label.text = @"O";
         }
     });
+}
+
+#pragma mark Other Methods
+// --------------------------------------- Other Methods ------------------------------------------
+-(void)handleTimerTick
+{
+    if (!self.didPlayerWin)
+    {
+        self.remainingTicks--;
+        self.timerLabel.text = [NSString stringWithFormat:@"Time Left: %@", [NSNumber numberWithUnsignedInt: (int)self.remainingTicks]];
+
+        if (self.remainingTicks <= 0) {
+
+            if (self.isPlayerXTurn)
+            {
+
+                self.playerTurnLabel.text = @"O's turn";
+            }
+            else
+            {
+                self.playerTurnLabel.text = @"X's turn";
+            }
+            self.isPlayerXTurn = !self.isPlayerXTurn;
+            self.remainingTicks = 30;
+        }
+    }
+}
+
+- (UILabel *)findLabelUsingPoint: (CGPoint)point
+{
+    UILabel  *returnLabel = nil;
+    for (UILabel *label in self.gameLabelsArray)
+    {
+        if (CGRectContainsPoint(label.frame, point))
+        {
+            return label;
+        }
+    }
+    return returnLabel;
+
+}
+
+-(void)gameEndedCheck
+{
+    UIAlertView *gameEndedAlertView = [[UIAlertView alloc]init];
+    gameEndedAlertView.delegate = self;
+    [gameEndedAlertView addButtonWithTitle: @"Play Again?"];
+
+    if (self.didPlayerWin && self.isPlayerXTurn)
+    {
+        gameEndedAlertView.title = [NSString stringWithFormat:@"Player X Wins!"];
+        [gameEndedAlertView show];
+    }
+    else if (self.didPlayerWin)
+    {
+        gameEndedAlertView.title = [NSString stringWithFormat:@"Player O Wins!"];
+        [gameEndedAlertView show];
+
+    }
+    //if neither player wins and all spaces have been filled
+    if (!self.didPlayerWin && (self.playerOMoves.count + self.playerXMoves.count) == 9)
+    {
+        [self drawAlert];
+        self.didGameDraw = YES;
+    }
 }
 
 @end
