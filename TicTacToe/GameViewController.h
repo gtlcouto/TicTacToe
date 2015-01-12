@@ -11,6 +11,7 @@
 @interface GameViewController : UIViewController
 
 @property BOOL isSinglePlayerEasy;
+@property BOOL isSinglePlayerNormal;
 @property BOOL isSinglePlayerHard;
 @property BOOL isMultiplayer;
 @property BOOL isMPCMultiplayer;

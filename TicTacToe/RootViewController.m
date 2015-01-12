@@ -33,9 +33,10 @@
             switch (button.tag)
             {
                 case 0: vc.isSinglePlayerEasy = YES;break;
-                case 1: vc.isSinglePlayerHard = YES;break;
-                case 2: vc.isMultiplayer = YES;break;
-                case 3: vc.isMPCMultiplayer = YES;break;
+                case 1: vc.isSinglePlayerNormal = YES;break;
+                case 2: vc.isSinglePlayerHard = YES;break;
+                case 3: vc.isMultiplayer = YES;break;
+                case 4: vc.isMPCMultiplayer = YES;break;
                 default: break;
             }
         }

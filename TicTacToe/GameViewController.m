@@ -102,7 +102,7 @@
 
         }
         //Singleplayer
-        else if (self.isSinglePlayerEasy || self.isSinglePlayerHard)
+        else if (self.isSinglePlayerEasy || self.isSinglePlayerNormal || self.isSinglePlayerHard)
         {
             [self singleplayerLogic:labelTouched];
         }
@@ -178,9 +178,9 @@
             [self CPUMoveEasy:availableSpaces];
         }
         //Hard Single Player - CPU implements optimal TicTacToe strategy
-        else if(self.isSinglePlayerHard)
+        else if(self.isSinglePlayerHard || self.isSinglePlayerNormal)
         {
-            [self CPUMoveHard];
+            [self CPUMoveHard:availableSpaces];
 
         }
     }
@@ -198,7 +198,7 @@
     self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
 }
 
-- (void)CPUMoveHard
+- (void)CPUMoveHard:(NSMutableArray *)availableSpaces
 {
     NSArray *corners = [NSArray arrayWithObjects:self.labelRow1Column1,self.labelRow1Column3,self.labelRow3Column1,self.labelRow3Column3, nil];
 
@@ -250,11 +250,18 @@
             else
             {
                 //if there's a move that block player fork, have CPU play move
-                labelNumber = [self.winConditionChecker blockFork:self.playerXMoves set2:self.playerOMoves];
+                if (self.isSinglePlayerHard)
+                {
+                    labelNumber = [self.winConditionChecker blockFork:self.playerXMoves set2:self.playerOMoves];
 
-                [self changeLabelToO:self.gameLabelsArray[[labelNumber intValue]-1]];
-                [self.playerOMoves addObject:labelNumber];
-                self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+                    [self changeLabelToO:self.gameLabelsArray[[labelNumber intValue]-1]];
+                    [self.playerOMoves addObject:labelNumber];
+                    self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+                }
+                else
+                {
+                    [self CPUMoveEasy:availableSpaces];
+                }
 
             }
 
