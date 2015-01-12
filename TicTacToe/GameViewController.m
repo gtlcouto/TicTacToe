@@ -81,7 +81,7 @@
     self.amICurrentPlayer = self.appDelegate.mcManager.isPlayFirst;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveDataWithNotification:)
+                                             selector:@selector(didReceiveDataWithNotificationOnGame:)
                                                  name:@"MCDidReceiveDataNotification"
                                                object:nil];
 }
@@ -377,7 +377,7 @@
     }
 }
 
--(void)didReceiveDataWithNotification:(NSNotification *)notification{
+-(void)didReceiveDataWithNotificationOnGame:(NSNotification *)notification{
     MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
     //    NSString *peerDisplayName = peerID.displayName;
 

@@ -138,6 +138,10 @@
             [_arrConnectedDevices addObject:peerDisplayName];
             self.random = arc4random();
             [self sendMessage:self.random];
+            dispatch_async(dispatch_get_main_queue(), ^{
+
+                [self performSegueWithIdentifier:@"gameViewFromConnectionSegue" sender:self];
+            });
         }
         else if (state == MCSessionStateNotConnected){
             if ([_arrConnectedDevices count] > 0) {
@@ -193,10 +197,7 @@
         [self sendMessage:self.random];
 
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
 
-    [self performSegueWithIdentifier:@"gameViewFromConnectionSegue" sender:self];
-    });
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)button
@@ -206,6 +207,7 @@
         GameViewController *vc = segue.destinationViewController;
 
         vc.isMPCMultiplayer = YES;
+
 
 
     }
