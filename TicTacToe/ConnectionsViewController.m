@@ -13,6 +13,10 @@
 
 @property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSMutableArray *arrConnectedDevices;
+@property  BOOL isPlayFirst;
+
+@property long random;
+@property long random2;
 
 -(void)peerDidChangeStateWithNotification:(NSNotification *)notification;
 
@@ -39,6 +43,11 @@
     [[_appDelegate mcManager] advertiseSelf:_swVisible.isOn];
     
     [_txtName setDelegate:self];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveDataWithNotification:)
+                                                 name:@"MCDidReceiveDataNotification"
+                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(peerDidChangeStateWithNotification:)
@@ -127,6 +136,8 @@
     if (state != MCSessionStateConnecting) {
         if (state == MCSessionStateConnected) {
             [_arrConnectedDevices addObject:peerDisplayName];
+            self.random = arc4random();
+            [self sendMessage:self.random];
         }
         else if (state == MCSessionStateNotConnected){
             if ([_arrConnectedDevices count] > 0) {
@@ -139,6 +150,43 @@
         BOOL peersExist = ([[_appDelegate.mcManager.session connectedPeers] count] == 0);
         [_btnDisconnect setEnabled:!peersExist];
         [_txtName setEnabled:peersExist];
+    }
+}
+
+-(void)sendMessage:(long)rawLong{
+    //NSData *dataToSend = [NSData dataWithBytes:&rawLong length:sizeof(rawLong)];
+
+    NSString *message = [NSString stringWithFormat:@"%li", rawLong];
+    NSData *dataToSend =  [message dataUsingEncoding:NSUTF8StringEncoding];
+    NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
+    NSError *error;
+
+    [_appDelegate.mcManager.session sendData:dataToSend
+                                     toPeers:allPeers
+                                    withMode:MCSessionSendDataReliable
+                                       error:&error];
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+}
+
+-(void)didReceiveDataWithNotification:(NSNotification *)notification{
+    MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
+    //    NSString *peerDisplayName = peerID.displayName;
+
+    NSData *receivedData = [[notification userInfo] objectForKey:@"data"];
+    NSString *receivedText = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
+    self.random2 = [receivedText longLongValue];
+    if (self.random > self.random2)
+    {
+        self.isPlayFirst = true;
+    } else if(self.random2 > self.random)
+    {
+        self.isPlayFirst = false;
+    } else
+    {
+        self.random = arc4random();
+        [self sendMessage:self.random];
     }
 }
 
