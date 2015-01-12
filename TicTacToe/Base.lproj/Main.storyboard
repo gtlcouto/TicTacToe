@@ -17,8 +17,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Xq-4z-kTS">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Xq-4z-kTS">
                                 <rect key="frame" x="93" y="189" width="135" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="4F8-oS-LC8"/>
+                                    <constraint firstAttribute="width" constant="135" id="RaH-ve-kDM"/>
+                                </constraints>
                                 <state key="normal" title="Single Player (Easy)">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -26,8 +30,12 @@
                                     <segue destination="vXZ-lx-hvc" kind="push" id="Zrl-xP-pu8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kiv-HF-3Tc">
-                                <rect key="frame" x="84" y="233" width="152" height="30"/>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kiv-HF-3Tc">
+                                <rect key="frame" x="84" y="229" width="152" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="0DO-DF-h5b"/>
+                                    <constraint firstAttribute="width" constant="152" id="yL1-fG-PMz"/>
+                                </constraints>
                                 <state key="normal" title="Single Player (Normal)">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -44,13 +52,21 @@
                                     <segue destination="MUc-zX-DcL" kind="modal" id="aJH-YZ-V3p"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tic Tac Toe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOV-jl-hNR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tic Tac Toe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOV-jl-hNR">
                                 <rect key="frame" x="82" y="116" width="157" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="SGB-MR-M4F"/>
+                                    <constraint firstAttribute="width" constant="157" id="uzY-3Q-Ff0"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="EuphemiaUCAS-Bold" family="Euphemia UCAS" pointSize="25"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFT-Oj-6UQ">
-                                <rect key="frame" x="72" y="278" width="176" height="30"/>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFT-Oj-6UQ">
+                                <rect key="frame" x="72" y="269" width="176" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="176" id="LmE-Rb-cTd"/>
+                                    <constraint firstAttribute="height" constant="30" id="mAF-Gj-dID"/>
+                                </constraints>
                                 <state key="normal" title="Single Player (Impossible)">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -58,8 +74,12 @@
                                     <segue destination="vXZ-lx-hvc" kind="push" id="hxO-OC-Bo4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLR-x9-kqP">
-                                <rect key="frame" x="98" y="356" width="124" height="30"/>
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLR-x9-kqP">
+                                <rect key="frame" x="98" y="349" width="124" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="124" id="N6w-xY-0fC"/>
+                                    <constraint firstAttribute="height" constant="30" id="VJd-iU-EFe"/>
+                                </constraints>
                                 <state key="normal" title="Multiplayer Online">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -67,8 +87,12 @@
                                     <segue destination="eFN-Ae-v3g" kind="push" id="n6p-zd-Tor"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBU-e5-Boz">
-                                <rect key="frame" x="122" y="316" width="76" height="30"/>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBU-e5-Boz">
+                                <rect key="frame" x="122" y="309" width="76" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="J7e-T8-V80"/>
+                                    <constraint firstAttribute="width" constant="76" id="n8L-jI-dNe"/>
+                                </constraints>
                                 <state key="normal" title="Multiplayer">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -78,6 +102,20 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.92156862750000001" green="1" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="gLR-x9-kqP" firstAttribute="top" secondItem="SBU-e5-Boz" secondAttribute="bottom" constant="10" id="7Cw-w8-rjj"/>
+                            <constraint firstItem="SBU-e5-Boz" firstAttribute="top" secondItem="vFT-Oj-6UQ" secondAttribute="bottom" constant="10" id="AkR-tY-8oK"/>
+                            <constraint firstAttribute="centerX" secondItem="gLR-x9-kqP" secondAttribute="centerX" id="IAv-u6-zyS"/>
+                            <constraint firstAttribute="centerY" secondItem="vFT-Oj-6UQ" secondAttribute="centerY" id="Ihm-dK-GYl"/>
+                            <constraint firstItem="vFT-Oj-6UQ" firstAttribute="top" secondItem="Kiv-HF-3Tc" secondAttribute="bottom" constant="10" id="Ihs-ZJ-cVV"/>
+                            <constraint firstAttribute="centerX" secondItem="vFT-Oj-6UQ" secondAttribute="centerX" id="N72-9g-ynq"/>
+                            <constraint firstAttribute="centerX" secondItem="2Xq-4z-kTS" secondAttribute="centerX" id="aaC-0j-RZ3"/>
+                            <constraint firstItem="Kiv-HF-3Tc" firstAttribute="top" secondItem="2Xq-4z-kTS" secondAttribute="bottom" constant="10" id="dAU-CP-T90"/>
+                            <constraint firstAttribute="centerX" secondItem="Kiv-HF-3Tc" secondAttribute="centerX" id="eYL-GH-XVs"/>
+                            <constraint firstAttribute="centerX" secondItem="nOV-jl-hNR" secondAttribute="centerX" id="fDA-ut-E8Y"/>
+                            <constraint firstAttribute="centerX" secondItem="SBU-e5-Boz" secondAttribute="centerX" id="gEu-5T-9DS"/>
+                            <constraint firstItem="2Xq-4z-kTS" firstAttribute="top" secondItem="nOV-jl-hNR" secondAttribute="bottom" constant="40" id="hB1-HT-KmT"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nit-Pm-W72"/>
                 </viewController>
