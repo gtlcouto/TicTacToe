@@ -193,9 +193,24 @@
         [self sendMessage:self.random];
 
     }
-    GameViewController *newgvc = [[GameViewController alloc]init];
-    [newgvc loadView];
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+    [self performSegueWithIdentifier:@"gameViewFromConnectionSegue" sender:self];
+    });
 }
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)button
+{
+    if ([[segue.destinationViewController restorationIdentifier] isEqualToString:@"GameViewController"])
+    {
+        GameViewController *vc = segue.destinationViewController;
+
+        vc.isMPCMultiplayer = YES;
+
+
+    }
+}
+
 
 
 #pragma mark - UITableView Delegate and Datasource method implementation
