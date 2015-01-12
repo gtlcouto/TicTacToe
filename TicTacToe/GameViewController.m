@@ -59,7 +59,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.amICurrentPlayer = self.appDelegate.mcManager.isPlayFirst;
+
 
     self.isPlayerXTurn = YES;
     //Initialize player move sets to empty set
@@ -77,6 +77,8 @@
     self.timeToPlay = [NSTimer scheduledTimerWithTimeInterval: 1.0 target: self selector: @selector(handleTimerTick) userInfo: nil repeats: YES];
 
     _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    self.amICurrentPlayer = self.appDelegate.mcManager.isPlayFirst;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveDataWithNotification:)
@@ -100,45 +102,47 @@
 
         }
         //Singleplayer
-        else
+        else if (self.isSinglePlayerEasy || self.isSinglePlayerHard)
         {
             [self singleplayerLogic:labelTouched];
         }
+        else if (self.isMPCMultiplayer)
+        {
+            if (self.amICurrentPlayer)
+            {
+
+                if ((!([self.playerXMoves containsObject:labelTag]  ||
+                       [self.playerOMoves containsObject:labelTag])) && labelTouched!=nil ){
+                    [self sendMessage:labelTag];
+                    if (self.isPlayerXTurn)
+                    {
+                        [self changeLabelToX:labelTouched];
+                        self.playerTurnLabel.text = @"O's turn";
+                        [self.playerXMoves addObject:labelTag];
+                        self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
+                    } else
+                    {
+                        [self changeLabelToO:labelTouched];
+                        [self.playerOMoves addObject:labelTag];
+                        self.playerTurnLabel.text = @"X's turn";
+                        self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
+                    }
+                    //add to set
+                    //check set to subsets
+                    [self gameEndedCheck];
+                    
+                    self.isPlayerXTurn = !self.isPlayerXTurn;
+                    self.amICurrentPlayer = !self.amICurrentPlayer;
+                }
+            }
+        }
+
         self.remainingTicks = 31;
         self.timeToPlay = [NSTimer scheduledTimerWithTimeInterval: 1.0 target: self selector: @selector(handleTimerTick) userInfo: nil repeats: NO];
 
     }
     //Multiplayer multiple devices logic
-    if (self.isMPCMultiplayer)
-    {
-        if (self.amICurrentPlayer)
-        {
-
-        if ((!([self.playerXMoves containsObject:labelTag]  ||
-               [self.playerOMoves containsObject:labelTag])) && labelTouched!=nil ){
-            [self sendMessage:labelTag];
-            if (self.isPlayerXTurn)
-            {
-                [self changeLabelToX:labelTouched];
-                self.playerTurnLabel.text = @"O's turn";
-                [self.playerXMoves addObject:labelTag];
-                self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
-            } else
-            {
-                [self changeLabelToO:labelTouched];
-                [self.playerOMoves addObject:labelTag];
-                self.playerTurnLabel.text = @"X's turn";
-                self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
-            }
-            //add to set
-            //check set to subsets
-            [self gameEndedCheck];
-
-            self.isPlayerXTurn = !self.isPlayerXTurn;
-        }
-        }
     }
-}
 
 - (void) createNewGame
 {
@@ -386,7 +390,7 @@
 
             [self changeLabelToX:label];
             self.playerTurnLabel.text = @"O's turn";
-            [self.playerXMoves addObject:[NSString stringWithFormat:@%"li",label.tag]];
+            [self.playerXMoves addObject:[NSString stringWithFormat:@"%li",label.tag]];
             self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
         } else
         {
@@ -398,7 +402,7 @@
         //add to set
         //check set to subsets
         [self gameEndedCheck];
-
+        self.amICurrentPlayer = !self.amICurrentPlayer;
         self.isPlayerXTurn = !self.isPlayerXTurn;
     });
 }

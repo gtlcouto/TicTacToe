@@ -8,7 +8,7 @@
 
 #import "ConnectionsViewController.h"
 #import "AppDelegate.h"
-
+#import "GameViewController.h"
 @interface ConnectionsViewController ()
 
 @property (nonatomic, strong) AppDelegate *appDelegate;
@@ -191,7 +191,10 @@
         NSLog(@"Draw");
         self.random = arc4random();
         [self sendMessage:self.random];
+
     }
+    GameViewController *newgvc = [[GameViewController alloc]init];
+    [newgvc loadView];
 }
 
 

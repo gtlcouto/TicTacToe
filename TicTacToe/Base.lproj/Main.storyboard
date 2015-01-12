@@ -90,20 +90,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="push" id="sn3-WC-1Ha"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wg-MD-YA2">
-                                <rect key="frame" x="117" y="349" width="87" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="87" id="Zdd-MV-nP3"/>
-                                    <constraint firstAttribute="height" constant="30" id="wf4-7z-kgW"/>
-                                </constraints>
-                                <state key="normal" title="Connections">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="eFN-Ae-v3g" kind="push" id="Pwt-Cw-MQs"/>
+                                    <segue destination="eFN-Ae-v3g" kind="push" id="n6p-zd-Tor"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -111,14 +98,12 @@
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="SBU-e5-Boz" secondAttribute="centerX" id="4Fh-9S-poA"/>
                             <constraint firstAttribute="centerX" secondItem="gLR-x9-kqP" secondAttribute="centerX" id="6iK-pU-yXq"/>
-                            <constraint firstItem="6wg-MD-YA2" firstAttribute="top" secondItem="gLR-x9-kqP" secondAttribute="bottom" constant="10" id="CMm-6P-vCo"/>
                             <constraint firstAttribute="centerX" secondItem="nOV-jl-hNR" secondAttribute="centerX" id="Ody-X5-L7i"/>
                             <constraint firstItem="h1V-3I-5lU" firstAttribute="trailing" secondItem="gMc-Jv-FLa" secondAttribute="trailingMargin" id="VX8-T6-nUc"/>
                             <constraint firstItem="vFT-Oj-6UQ" firstAttribute="top" secondItem="2Xq-4z-kTS" secondAttribute="bottom" constant="10" id="YcS-F9-IAx"/>
                             <constraint firstItem="0mA-A0-TvR" firstAttribute="top" secondItem="h1V-3I-5lU" secondAttribute="bottom" constant="20" id="aLc-yA-8XZ"/>
                             <constraint firstItem="2Xq-4z-kTS" firstAttribute="top" secondItem="nOV-jl-hNR" secondAttribute="bottom" constant="40" id="cRZ-BV-9JE"/>
                             <constraint firstItem="gLR-x9-kqP" firstAttribute="top" secondItem="SBU-e5-Boz" secondAttribute="bottom" constant="10" id="diF-9E-Erw"/>
-                            <constraint firstAttribute="centerX" secondItem="6wg-MD-YA2" secondAttribute="centerX" id="f6s-F6-g3Z"/>
                             <constraint firstAttribute="centerX" secondItem="vFT-Oj-6UQ" secondAttribute="centerX" id="jiP-kc-08R"/>
                             <constraint firstAttribute="centerX" secondItem="nOV-jl-hNR" secondAttribute="centerX" id="ly3-KQ-Di8"/>
                             <constraint firstAttribute="centerY" secondItem="SBU-e5-Boz" secondAttribute="centerY" id="oN5-5Z-bHf"/>
@@ -509,7 +494,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="sn3-WC-1Ha"/>
+        <segue reference="ixt-sa-F5B"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.40000000596046448" green="0.80000001192092896" blue="1" alpha="1" colorSpace="calibratedRGB"/>
 </document>
