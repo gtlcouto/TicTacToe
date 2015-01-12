@@ -45,6 +45,7 @@
 @property NSMutableSet *playerOMoves;
 
 @property BOOL isPlayerXTurn;
+@property BOOL amICurrentPlayer;
 @property BOOL didPlayerWin;
 @property BOOL didGameDraw;
 
@@ -57,6 +58,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.amICurrentPlayer = self.appDelegate.mcManager.isPlayFirst;
 
     self.isPlayerXTurn = YES;
     //Initialize player move sets to empty set
@@ -108,6 +111,9 @@
     //Multiplayer multiple devices logic
     if (self.isMPCMultiplayer)
     {
+        if (self.amICurrentPlayer)
+        {
+
         if ((!([self.playerXMoves containsObject:labelTag]  ||
                [self.playerOMoves containsObject:labelTag])) && labelTouched!=nil ){
             [self sendMessage:labelTag];
@@ -129,6 +135,7 @@
             [self gameEndedCheck];
 
             self.isPlayerXTurn = !self.isPlayerXTurn;
+        }
         }
     }
 }
@@ -377,10 +384,22 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.isPlayerXTurn) {
 
-            label.text = @"X";
-        } else {
-            label.text = @"O";
+            [self changeLabelToX:label];
+            self.playerTurnLabel.text = @"O's turn";
+            [self.playerXMoves addObject:[NSString stringWithFormat:@%"li",label.tag]];
+            self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerXMoves];
+        } else
+        {
+            [self changeLabelToO:label];
+            [self.playerOMoves addObject:[NSString stringWithFormat:@"%li",(long)label.tag]];
+            self.playerTurnLabel.text = @"X's turn";
+            self.didPlayerWin = [self.winConditionChecker checkWinConditions:self.playerOMoves];
         }
+        //add to set
+        //check set to subsets
+        [self gameEndedCheck];
+
+        self.isPlayerXTurn = !self.isPlayerXTurn;
     });
 }
 

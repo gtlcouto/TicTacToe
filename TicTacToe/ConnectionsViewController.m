@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSMutableArray *arrConnectedDevices;
-@property  BOOL isPlayFirst;
+
 
 @property long random;
 @property long random2;
@@ -179,12 +179,16 @@
     self.random2 = [receivedText longLongValue];
     if (self.random > self.random2)
     {
-        self.isPlayFirst = true;
+        self.appDelegate.mcManager.isPlayFirst = true;
+        NSLog(@"I am first");
     } else if(self.random2 > self.random)
     {
-        self.isPlayFirst = false;
+        self.appDelegate.mcManager.isPlayFirst = false;
+
+        NSLog(@"I am second");
     } else
     {
+        NSLog(@"Draw");
         self.random = arc4random();
         [self sendMessage:self.random];
     }

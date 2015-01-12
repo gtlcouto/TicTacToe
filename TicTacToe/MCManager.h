@@ -15,6 +15,7 @@
 @property (nonatomic, strong) MCSession *session;
 @property (nonatomic, strong) MCBrowserViewController *browser;
 @property (nonatomic, strong) MCAdvertiserAssistant *advertiser;
+@property bool isPlayFirst;
 
 -(void)setupPeerAndSessionWithDisplayName:(NSString *)displayName;
 -(void)setupMCBrowser;
